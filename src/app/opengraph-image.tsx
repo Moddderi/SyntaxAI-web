@@ -9,7 +9,7 @@ export default function OpenGraphImage() {
     (
       <div
         style={{
-          background: '#0d0d0f',
+          background: '#000000',
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
@@ -21,19 +21,21 @@ export default function OpenGraphImage() {
         <div
           style={{
             alignItems: 'center',
-            color: '#00eaff',
+            color: '#f5f5f5',
             display: 'flex',
             fontSize: 28,
-            fontWeight: 600,
+            fontWeight: 700,
             gap: 16,
+            letterSpacing: 4,
+            textTransform: 'uppercase',
           }}
         >
           <div
             style={{
               alignItems: 'center',
-              background: '#00eaff',
+              background: '#f5f5f5',
               borderRadius: 16,
-              color: '#0d0d0f',
+              color: '#050505',
               display: 'flex',
               fontSize: 32,
               fontWeight: 700,
@@ -51,18 +53,19 @@ export default function OpenGraphImage() {
           <div
             style={{
               color: '#ffffff',
-              fontSize: 64,
-              fontWeight: 600,
-              letterSpacing: -1.5,
+              fontSize: 56,
+              fontWeight: 700,
+              letterSpacing: 2,
               lineHeight: 1.1,
               maxWidth: 900,
+              textTransform: 'uppercase',
             }}
           >
             Turn every tab into a code library
           </div>
           <div
             style={{
-              color: '#9ca3af',
+              color: '#8a8a8a',
               fontSize: 28,
               marginTop: 24,
               maxWidth: 820,

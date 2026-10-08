@@ -1,5 +1,8 @@
 import { FEATURE_GRID, FEATURE_HIGHLIGHTS } from '@/lib/site';
 import { Reveal } from '@/components/motion/Reveal';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
+import { SectionAmbient } from '@/components/SectionAmbient';
+import { SectionHead } from '@/components/SectionHead';
 import { TechPills } from '@/components/TechPills';
 import type { ReactNode } from 'react';
 
@@ -8,7 +11,7 @@ function FeatureCheck({ children }: { children: string }) {
     <li className="flex items-center gap-2.5 text-sm text-syntax-muted">
       <svg
         aria-hidden="true"
-        className="h-4 w-4 shrink-0 text-syntax-accent"
+        className="h-4 w-4 shrink-0 text-syntax-text"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
@@ -25,8 +28,8 @@ function FeatureCheck({ children }: { children: string }) {
 
 function TitleWithIcon({ icon, children }: { icon: ReactNode; children: string }) {
   return (
-    <h3 className="mt-5 flex items-center gap-2.5 text-xl font-semibold tracking-tight">
-      <span className="inline-flex h-6 w-6 items-center justify-center text-syntax-accent">
+    <h3 className="mt-5 flex items-center gap-2.5 font-mono text-base font-bold uppercase tracking-[0.08em]">
+      <span className="inline-flex h-6 w-6 items-center justify-center text-syntax-text">
         {icon}
       </span>
       {children}
@@ -93,16 +96,11 @@ function IconLock() {
 
 const SMALL_ICONS = [IconSearch, IconImage, IconPanel, IconLock];
 
-function ShotFrame({
-  children,
-  glow,
-}: {
-  children: ReactNode;
-  glow: string;
-}) {
+function ShotFrame({ children }: { children: ReactNode }) {
   return (
-    <div className={`overflow-hidden rounded-xl ${glow} p-2.5`}>
-      <div className="h-[200px] overflow-hidden rounded-lg border border-white/10 bg-[#0a0a0c] shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+    <div className="feature-shot overflow-hidden rounded-xl border border-syntax-border bg-syntax-code p-2.5 shadow-[var(--syntax-glow)]">
+      <div className="relative h-[200px] overflow-hidden rounded-lg border border-syntax-border bg-syntax-bg">
+        <span className="feature-shot__scan" aria-hidden />
         {children}
       </div>
     </div>
@@ -111,10 +109,10 @@ function ShotFrame({
 
 function StackVisual() {
   return (
-    <ShotFrame glow="bg-linear-to-br from-syntax-accent/45 via-[#2a6bff]/30 to-[#0b3d44]">
+    <ShotFrame>
       <div className="flex h-full flex-col justify-between p-4">
-        <div className="rounded-lg border border-syntax-border bg-syntax-card p-3 font-mono text-[11px] leading-relaxed text-syntax-muted">
-          <span className="text-syntax-accent">export function</span> useNotes() {'{'}
+        <div className="code-surface p-3 text-[11px] leading-relaxed text-syntax-muted">
+          <span className="text-syntax-text">export function</span> useNotes() {'{'}
           <br />
           &nbsp;&nbsp;return useQuery(&apos;notes&apos;)
           <br />
@@ -124,7 +122,7 @@ function StackVisual() {
           {['TypeScript', 'React', 'TanStack Query'].map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-syntax-accent/30 bg-syntax-accent/10 px-2 py-0.5 text-[10px] text-syntax-accent"
+              className="rounded-md border border-syntax-border bg-syntax-hover px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-syntax-muted"
             >
               {tag}
             </span>
@@ -137,24 +135,24 @@ function StackVisual() {
 
 function CaptureVisual() {
   return (
-    <ShotFrame glow="bg-linear-to-br from-[#4ee6f5]/40 via-[#08353b] to-syntax-accent/20">
+    <ShotFrame>
       <div className="flex h-full items-stretch">
         <div className="hidden flex-1 space-y-2.5 p-4 sm:block">
           <div className="h-2.5 w-20 rounded bg-white/10" />
           <div className="h-2.5 w-full rounded bg-white/8" />
           <div className="h-2.5 w-4/5 rounded bg-white/8" />
-          <div className="mt-4 rounded-lg border border-syntax-border bg-syntax-card p-3 font-mono text-[10px] text-syntax-muted">
-            <span className="text-syntax-accent">function</span> saveNote() {'{'}
+          <div className="code-surface mt-4 p-3 text-[10px] text-syntax-muted">
+            <span className="text-syntax-text">function</span> saveNote() {'{'}
             {'}'}
           </div>
         </div>
-        <aside className="flex w-[46%] flex-col border-l border-syntax-border bg-syntax-bg p-3">
-          <p className="text-[11px] font-semibold">SyntaxAI</p>
-          <span className="mt-2 w-fit rounded-md bg-syntax-accent/15 px-2 py-0.5 text-[9px] text-syntax-accent">
+        <aside className="flex w-[46%] flex-col border-l border-syntax-border bg-syntax-card p-3">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-wider">SyntaxAI</p>
+          <span className="mt-2 w-fit rounded-md border border-syntax-border bg-syntax-hover px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-syntax-muted">
             Capture
           </span>
-          <div className="mt-3 flex-1 rounded-lg border border-syntax-border bg-syntax-card" />
-          <div className="mt-2 h-6 rounded-md bg-syntax-accent" />
+          <div className="mt-3 flex-1 rounded-lg border border-syntax-border bg-syntax-bg" />
+          <div className="mt-2 h-6 rounded-full bg-syntax-accent" />
         </aside>
       </div>
     </ShotFrame>
@@ -162,22 +160,15 @@ function CaptureVisual() {
 }
 
 function GridThumb({ index }: { index: number }) {
-  const accents = [
-    'from-syntax-accent/40 to-[#062428]',
-    'from-cyan-200/30 to-[#0a2a30]',
-    'from-syntax-accent/25 to-syntax-card',
-    'from-[#4ee6f5]/35 to-[#071c20]',
-  ];
+  const opacity = ['opacity-90', 'opacity-75', 'opacity-85', 'opacity-70'][index] ?? 'opacity-80';
 
   return (
     <div
-      className={`h-28 overflow-hidden rounded-lg bg-linear-to-br ${accents[index] ?? accents[0]} p-[1px]`}
+      className={`feature-thumb h-28 overflow-hidden rounded-lg border border-syntax-border bg-syntax-code p-4 ${opacity}`}
     >
-      <div className="h-full rounded-[7px] bg-syntax-bg/90 p-4">
-        <div className="h-2 w-16 rounded bg-white/15" />
-        <div className="mt-3 h-2 w-full rounded bg-white/10" />
-        <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
-      </div>
+      <div className="h-2 w-16 rounded bg-white/15" />
+      <div className="mt-3 h-2 w-full rounded bg-white/10" />
+      <div className="mt-2 h-2 w-2/3 rounded bg-white/10" />
     </div>
   );
 }
@@ -186,21 +177,23 @@ export function FeaturesSection() {
   const [stackFeature, captureFeature] = FEATURE_HIGHLIGHTS;
 
   return (
-    <section className="mx-auto max-w-6xl scroll-mt-24 px-6 py-20 md:py-28" id="features">
-      <Reveal className="mx-auto mb-14 max-w-2xl text-center">
-        <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
-          Everything you need to{' '}
-          <span className="accent-flow">keep the code</span>
-        </h2>
-        <p className="mt-4 text-syntax-muted">
-          Don&apos;t dump snippets into random files. Capture the context, tag it, and reuse
-          it when it actually matters.
-        </p>
+    <section
+      className="relative scroll-mt-24 overflow-hidden py-20 md:py-28"
+      id="features"
+    >
+      <SectionAmbient tone="features" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+      <Reveal className="mb-14" variant="blur-up">
+        <SectionHead
+          label="Features"
+          title="Everything you need to keep the code"
+          description="Don't dump snippets into random files. Capture the context, tag it, and reuse it when it actually matters."
+        />
       </Reveal>
 
       <div className="grid items-stretch gap-5 lg:grid-cols-2">
-        <Reveal className="h-full">
-          <article className="lift-card flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5 sm:p-6">
+        <Reveal className="h-full" variant="scale">
+          <article className="lift-card feature-card-glow flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5 sm:p-6">
             <StackVisual />
             <TitleWithIcon icon={<IconLayers />}>{stackFeature.title}</TitleWithIcon>
             <p className="mt-2 text-sm leading-relaxed text-syntax-muted">
@@ -212,8 +205,8 @@ export function FeaturesSection() {
           </article>
         </Reveal>
 
-        <Reveal className="h-full" delay={0.08}>
-          <article className="lift-card flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5 sm:p-6">
+        <Reveal className="h-full" delay={0.08} variant="scale">
+          <article className="lift-card feature-card-glow flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5 sm:p-6">
             <CaptureVisual />
             <TitleWithIcon icon={<IconCapture />}>{captureFeature.title}</TitleWithIcon>
             <p className="mt-2 text-sm leading-relaxed text-syntax-muted">
@@ -230,16 +223,16 @@ export function FeaturesSection() {
         </Reveal>
       </div>
 
-      <div className="mt-5 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <Stagger className="mt-5 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
         {FEATURE_GRID.map((feature, index) => {
           const Icon = SMALL_ICONS[index] ?? IconSearch;
 
           return (
-            <Reveal key={feature.title} className="h-full" delay={0.04 + index * 0.06}>
-              <article className="lift-card flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5">
+            <StaggerItem key={feature.title} className="h-full">
+              <article className="lift-card feature-card-glow flex h-full flex-col rounded-2xl border border-syntax-border bg-syntax-card p-5">
                 <GridThumb index={index} />
-                <h3 className="mt-5 flex items-center gap-2 text-base font-semibold">
-                  <span className="text-syntax-accent">
+                <h3 className="mt-5 flex items-center gap-2 font-mono text-sm font-bold uppercase tracking-[0.06em]">
+                  <span className="text-syntax-text">
                     <Icon />
                   </span>
                   {feature.title}
@@ -253,9 +246,10 @@ export function FeaturesSection() {
                   ))}
                 </ul>
               </article>
-            </Reveal>
+            </StaggerItem>
           );
         })}
+      </Stagger>
       </div>
     </section>
   );

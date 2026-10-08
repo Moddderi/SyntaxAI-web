@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
 import { ChromeStoreButton } from './ChromeStoreButton';
 
@@ -31,11 +32,11 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-syntax-border/80 bg-syntax-bg/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-syntax-border bg-syntax-bg/95 backdrop-blur-md">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-6">
         <Link className="flex items-center gap-3" href="/" onClick={() => setOpen(false)}>
           <Logo className="h-8 w-8" />
-          <span className="text-lg font-semibold tracking-tight text-syntax-text">
+          <span className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-syntax-text">
             SyntaxAI
           </span>
         </Link>
@@ -44,7 +45,7 @@ export function SiteHeader() {
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
-              className="text-base font-medium text-white/90 transition hover:text-syntax-accent"
+              className="text-sm font-medium text-syntax-muted transition hover:text-syntax-text"
               href={link.href}
             >
               {link.label}
@@ -53,13 +54,16 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <div className="hidden md:block">
+            <AuthNav />
+          </div>
           <ChromeStoreButton size="sm" />
 
           <button
             aria-controls="mobile-nav"
             aria-expanded={open}
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-syntax-border text-syntax-text md:hidden"
+            className="btn-secondary inline-flex h-9 w-9 items-center justify-center rounded-xl md:hidden"
             onClick={() => setOpen((value) => !value)}
             type="button"
           >
@@ -90,13 +94,14 @@ export function SiteHeader() {
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
-                className="text-base font-medium text-white/90 transition hover:text-syntax-accent"
+                className="text-base font-medium text-syntax-muted transition hover:text-syntax-text"
                 href={link.href}
                 onClick={() => setOpen(false)}
               >
                 {link.label}
               </Link>
             ))}
+            <AuthNav compact />
           </div>
         </nav>
       ) : null}

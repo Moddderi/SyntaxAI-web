@@ -3,11 +3,11 @@ import { HERO_VIDEO_URL } from '@/lib/site';
 export function HeroMedia() {
   return (
     <div className="hero-enter hero-enter-5 relative mx-auto w-full max-w-xl lg:max-w-none">
-      <div className="pointer-events-none absolute -inset-8 rounded-[2.5rem] bg-syntax-accent/20 blur-3xl" />
+      <div className="pointer-events-none absolute -inset-8 rounded-[2.5rem] bg-white/[0.06] blur-3xl" />
 
-      <div className="relative [perspective:1400px]">
-        <div className="overflow-hidden rounded-2xl border border-syntax-border bg-[#0a0a0c] shadow-[0_32px_80px_rgba(0,0,0,0.55)] transition duration-500 hover:border-syntax-accent/25 lg:[transform:rotateX(6deg)_rotateY(-10deg)]">
-          <div className="flex items-center gap-2 border-b border-syntax-border bg-syntax-card px-4 py-3">
+      <div className="hero-media-float relative [perspective:1400px]">
+        <div className="overflow-hidden rounded-2xl border border-syntax-border bg-syntax-card shadow-[0_32px_80px_rgba(0,0,0,0.65)] transition duration-500 hover:border-white/20 lg:[transform:rotateX(6deg)_rotateY(-10deg)]">
+          <div className="flex items-center gap-2 border-b border-syntax-border bg-[var(--syntax-code-header)] px-4 py-3">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
@@ -27,20 +27,20 @@ export function HeroMedia() {
                 src={HERO_VIDEO_URL}
               />
             ) : (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[radial-gradient(ellipse_at_center,_rgba(0,234,255,0.16)_0%,_transparent_62%)]">
-                <div className="absolute inset-6 rounded-xl border border-syntax-border/80 bg-syntax-card/40 p-5">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[radial-gradient(ellipse_at_center,_rgb(255_255_255_/_0.06)_0%,_transparent_62%)]">
+                <div className="absolute inset-6 rounded-xl border border-syntax-border bg-syntax-card/60 p-5">
                   <div className="skeleton mb-4 h-3 w-28 rounded" />
                   <div className="space-y-2">
                     <div className="skeleton h-2.5 w-full rounded" />
                     <div className="skeleton h-2.5 w-5/6 rounded" />
                     <div className="skeleton h-2.5 w-2/3 rounded" />
                   </div>
-                  <div className="mt-6 rounded-xl border border-syntax-border bg-syntax-bg p-4 font-mono text-[11px] leading-relaxed text-syntax-muted">
-                    <span className="text-syntax-accent">const</span> note = capture(tab)
+                  <div className="code-surface mt-6 p-4 text-[11px] leading-relaxed text-syntax-muted">
+                    <span className="text-syntax-text">const</span> note = capture(tab)
                   </div>
                 </div>
 
-                <div className="play-pulse relative z-10 flex h-16 w-16 items-center justify-center rounded-full bg-syntax-accent text-black shadow-[0_0_40px_rgba(0,234,255,0.45)]">
+                <div className="play-pulse relative z-10 flex h-16 w-16 items-center justify-center rounded-full bg-syntax-accent text-syntax-accent-fg shadow-[var(--syntax-glow-strong)]">
                   <span className="play-ring" />
                   <svg
                     aria-hidden="true"

@@ -1,19 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { JetBrains_Mono, Work_Sans } from 'next/font/google';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { MotionRoot } from '@/components/motion/MotionRoot';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
-const inter = Inter({
-  variable: '--font-inter',
+const workSans = Work_Sans({
+  variable: '--font-work-sans',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains',
   subsets: ['latin'],
+  weight: ['700'],
 });
 
 export const metadata: Metadata = {
@@ -25,7 +27,8 @@ export const metadata: Metadata = {
     'Turn every tab into a code library. Capture snippets, docs, and screenshots — AI titles, tags, and a searchable library in Chrome.',
   metadataBase: new URL(SITE_URL),
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/logo-mark.png', type: 'image/png' }],
+    apple: [{ url: '/logo-mark.png', type: 'image/png' }],
   },
   openGraph: {
     title: 'SyntaxAI — AI developer notebook for Chrome',
@@ -49,8 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${inter.variable} ${jetbrainsMono.variable} h-full`} lang="en">
-      <body className="flex min-h-full flex-col bg-syntax-bg text-syntax-text antialiased">
+    <html
+      className={`${workSans.variable} ${jetbrainsMono.variable} h-full`}
+      data-theme="dark"
+      lang="en"
+    >
+      <body className="flex min-h-full flex-col bg-syntax-bg font-sans text-syntax-text antialiased">
         <SiteHeader />
         <MotionRoot>
           <main className="flex-1">{children}</main>

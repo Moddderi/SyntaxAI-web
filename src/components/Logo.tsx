@@ -1,27 +1,23 @@
+import Image from 'next/image';
+
 interface LogoProps {
   className?: string;
+  /** `light` = white mark on dark UI; `dark` = mark for light backgrounds */
+  variant?: 'light' | 'dark';
 }
 
-export function Logo({ className = 'h-9 w-9' }: LogoProps) {
+export function Logo({ className = 'h-9 w-9', variant = 'light' }: LogoProps) {
+  const src = variant === 'dark' ? '/logo-mark-black.png' : '/logo-mark.png';
+
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 40 40"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect fill="#00eaff" height="40" rx="10" width="40" />
-      <rect
-        fill="#0d0d0f"
-        height="18"
-        rx="4"
-        stroke="#00eaff"
-        strokeWidth="2"
-        width="18"
-        x="11"
-        y="11"
-      />
-    </svg>
+    <Image
+      alt=""
+      aria-hidden
+      className={`object-contain ${className}`}
+      height={32}
+      priority
+      src={src}
+      width={32}
+    />
   );
 }
