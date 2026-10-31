@@ -36,5 +36,9 @@ export async function GET(request: NextRequest) {
       notesPath: '/api/v1/notes',
       strategy: 'local-first',
     },
+    ai: {
+      analyzeSnippetPath: '/api/v1/ai/analyze-snippet',
+      analyzeMixedPath: '/api/v1/ai/analyze-mixed',
+    },
   });
 }

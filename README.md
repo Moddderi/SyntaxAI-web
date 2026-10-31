@@ -127,6 +127,41 @@ Base URL: `NEXT_PUBLIC_SITE_URL` (e.g. `https://syntaxai.app`). All extension ro
 | `GET` | `/api/me` | Lightweight profile (same Bearer) |
 | `GET` | `/api/v1/notes?since=` | Pull notes changed after `since` (ISO); omit for full set |
 | `POST` | `/api/v1/notes` | Push batch from extension |
+| `POST` | `/api/v1/ai/analyze-snippet` | Snippet / OCR analysis (server OpenAI key) |
+| `POST` | `/api/v1/ai/analyze-mixed` | Page-context mixed note analysis |
+
+### AI proxy
+
+Requires `Authorization: Bearer sat_…` and server env `OPENAI_API_KEY` (never `NEXT_PUBLIC_*`).
+
+`POST /api/v1/ai/analyze-snippet`
+
+```json
+{
+  "locale": "en",
+  "promptOrCode": "…",
+  "imagesBase64": ["data:image/png;base64,…"]
+}
+```
+
+`POST /api/v1/ai/analyze-mixed`
+
+```json
+{
+  "locale": "en",
+  "pageContext": {
+    "selectedText": "",
+    "rawContent": "…",
+    "url": "https://…",
+    "pageTitle": "",
+    "metaDescription": "",
+    "siteType": "general",
+    "timestamp": 0
+  }
+}
+```
+
+Both return `{ "result": { … } }`. Prompts and the OpenAI key stay on the server.
 
 ### Local-first sync (recommended)
 
