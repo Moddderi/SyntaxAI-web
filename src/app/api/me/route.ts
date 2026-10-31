@@ -1,22 +1,17 @@
-import { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { auth } from '@/lib/auth';
 import { resolveDeviceToken } from '@/lib/device-token';
+import { EXTENSION_CORS_HEADERS } from '@/lib/extension-api';
 import { asPlan, getStoredPlan } from '@/lib/plan';
 
 export const runtime = 'nodejs';
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Authorization, Content-Type',
-};
-
 function json(body: unknown, status = 200) {
-  return Response.json(body, { status, headers: corsHeaders });
+  return Response.json(body, { status, headers: EXTENSION_CORS_HEADERS });
 }
 
 export function OPTIONS() {
-  return new Response(null, { status: 204, headers: corsHeaders });
+  return new Response(null, { status: 204, headers: EXTENSION_CORS_HEADERS });
 }
 
 export async function GET(request: NextRequest) {
@@ -29,6 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     return json({
+      id: deviceUser.id,
       email: deviceUser.email,
       name: deviceUser.name,
       plan: deviceUser.plan,
@@ -43,6 +39,7 @@ export async function GET(request: NextRequest) {
   const storedPlan = await getStoredPlan(session.user.id);
 
   return json({
+    id: session.user.id,
     email: session.user.email,
     name: session.user.name,
     plan: asPlan(session.user.plan) === 'pro' || storedPlan === 'pro' ? 'pro' : storedPlan,

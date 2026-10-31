@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -69,3 +69,25 @@ export const deviceToken = pgTable('device_token', {
   createdAt: timestamp('created_at').notNull(),
   expiresAt: timestamp('expires_at').notNull(),
 });
+
+/** Cloud copy of extension notes — synced after local save in the browser */
+export const note = pgTable(
+  'note',
+  {
+    id: text('id').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    title: text('title').notNull().default(''),
+    content: text('content').notNull().default(''),
+    tags: text('tags').notNull().default('[]'),
+    pageUrl: text('page_url'),
+    stack: text('stack'),
+    createdAt: timestamp('created_at').notNull(),
+    updatedAt: timestamp('updated_at').notNull(),
+    deletedAt: timestamp('deleted_at'),
+  },
+  (table) => ({
+    userUpdatedIdx: index('note_user_updated_idx').on(table.userId, table.updatedAt),
+  }),
+);

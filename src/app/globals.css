@@ -110,6 +110,30 @@ html {
   animation-delay: 0.22s;
 }
 
+.auth-enter {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.auth-enter-1 {
+  animation-delay: 0.04s;
+}
+
+.auth-enter-2 {
+  animation-delay: 0.12s;
+}
+
+.auth-enter-3 {
+  animation-delay: 0.2s;
+}
+
+.auth-enter-4 {
+  animation-delay: 0.28s;
+}
+
+.auth-enter-5 {
+  animation-delay: 0.36s;
+}
+
 .orb-float {
   animation: float-slow 18s ease-in-out infinite;
 }
@@ -553,6 +577,98 @@ html {
   transform-origin: center;
 }
 
+.faq-panel {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.faq-item__chevron {
+  transition: transform 0.25s ease;
+}
+
+.faq-item__chevron--open {
+  transform: rotate(180deg);
+}
+
+.faq-item__panel {
+  grid-template-rows: 0fr;
+}
+
+.faq-item__panel--open {
+  grid-template-rows: 1fr;
+}
+
+.get-started-glow {
+  background: radial-gradient(ellipse 70% 50% at 50% 40%, rgb(255 255 255 / 0.08), transparent 70%);
+  inset: 0;
+  position: absolute;
+}
+
+.get-started-card__sheen {
+  animation: get-started-sheen 9s ease-in-out infinite;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgb(255 255 255 / 0.06) 50%,
+    transparent 60%
+  );
+  inset: 0;
+  position: absolute;
+}
+
+@keyframes get-started-sheen {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-30%);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateX(30%);
+  }
+}
+
+.browser-install-btn {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.browser-install-btn:hover {
+  transform: translateY(-2px);
+}
+
+.browser-install-btn--chrome:hover {
+  box-shadow: var(--syntax-glow-strong);
+}
+
+.browser-install-btn--firefox:hover {
+  border-color: rgb(255 255 255 / 0.28);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+.book-call-glow {
+  background: radial-gradient(ellipse 60% 45% at 50% 50%, rgb(255 255 255 / 0.06), transparent 72%);
+  inset: 0;
+  position: absolute;
+}
+
+.book-call-card {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.04),
+    0 24px 48px rgb(0 0 0 / 0.35);
+}
+
+.book-call-btn {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.book-call-btn:hover {
+  transform: translateY(-1px);
+}
+
 .signin-hero-grid {
   background-image:
     linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
@@ -581,10 +697,42 @@ html {
   animation-delay: 0.6s;
 }
 
+.auth-complete-check {
+  animation: auth-check-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .auth-complete-check-path {
   stroke-dasharray: 32;
   stroke-dashoffset: 32;
   animation: auth-check-draw 0.55s ease forwards 0.1s;
+}
+
+@keyframes auth-check-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes signin-hero-glow-drift {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -12px) scale(1.05);
+  }
+}
+
+.signin-hero-glow {
+  animation: signin-hero-glow-drift 9s ease-in-out infinite;
+  left: 50%;
 }
 
 .account-welcome-enter {
@@ -808,6 +956,7 @@ html {
   }
 
   .hero-enter,
+  .auth-enter,
   .orb-float,
   .play-pulse,
   .play-ring,
@@ -828,8 +977,10 @@ html {
 
   .auth-complete-spinner,
   .auth-complete-ring,
+  .auth-complete-check,
   .auth-complete-check-path,
-  .account-welcome-enter {
+  .account-welcome-enter,
+  .signin-hero-glow {
     animation: none;
   }
 
@@ -849,6 +1000,13 @@ html {
   .team-visual__sync-dot,
   .team-icon-pulse {
     animation: none;
+  }
+
+  .get-started-card__sheen,
+  .browser-install-btn:hover,
+  .book-call-btn:hover {
+    animation: none;
+    transform: none;
   }
 }
 

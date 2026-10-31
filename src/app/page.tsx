@@ -1,9 +1,9 @@
-import { CtaBanner } from '@/components/CtaBanner';
+import { BookCallSection } from '@/components/BookCallSection';
+import { FaqSection } from '@/components/FaqSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
 import { HomeFlowDivider } from '@/components/HomeFlowDivider';
 import { HeroSection } from '@/components/HeroSection';
-import { PricingTeaser } from '@/components/PricingCards';
-import { TeamTeaser } from '@/components/TeamTeaser';
+import { TryFreeSection } from '@/components/TryFreeSection';
 
 export default function HomePage() {
   return (
@@ -12,9 +12,9 @@ export default function HomePage() {
       <HomeFlowDivider />
       <FeaturesSection />
       <HomeFlowDivider />
-      <TeamTeaser />
-      <PricingTeaser />
-      <CtaBanner />
+      <TryFreeSection />
+      <BookCallSection />
+      <FaqSection />
     </>
   );
 }

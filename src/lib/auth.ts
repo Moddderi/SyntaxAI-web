@@ -59,6 +59,8 @@ export const auth = betterAuth({
     authBaseUrl,
     'http://localhost:3000',
     'https://syntaxai-web.vercel.app',
+    'https://syntaxai.app',
+    'https://www.syntaxai.app',
   ],
   database: drizzleAdapter(db, {
     provider: 'pg',

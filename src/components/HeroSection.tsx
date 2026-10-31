@@ -32,9 +32,9 @@ export function HeroSection() {
               </ChromeStoreButton>
               <Link
                 className="btn-secondary inline-flex h-12 items-center gap-2 rounded-full px-8 text-sm font-medium"
-                href="#pricing"
+                href="#get-started"
               >
-                See pricing
+                Try free
                 <span aria-hidden="true">↓</span>
               </Link>
             </div>

@@ -73,28 +73,35 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
     <div className="relative">
       {redirecting ? (
         <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-syntax-bg/95 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-syntax-bg px-6"
           aria-live="polite"
         >
-          <div className="text-center">
-            <span className="auth-complete-spinner mx-auto block h-12 w-12 rounded-full border-2 border-transparent border-t-white/90" />
-            <p className="mt-6 font-mono text-xs font-bold uppercase tracking-[0.16em] text-syntax-muted">
+          <div className="auth-complete-grid pointer-events-none absolute inset-0" aria-hidden />
+          <div className="relative text-center">
+            <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
+              <span className="auth-complete-ring absolute inset-0 rounded-full border border-white/10" />
+              <span className="auth-complete-ring auth-complete-ring-delay absolute inset-2 rounded-full border border-white/20" />
+              <span className="auth-complete-spinner absolute inset-0 rounded-full border-2 border-transparent border-t-white/90" />
+            </div>
+            <p className="auth-enter mt-8 font-mono text-xs font-bold uppercase tracking-[0.16em] text-syntax-muted">
               Redirecting
             </p>
-            <p className="mt-2 text-sm text-syntax-text">Opening secure sign-in…</p>
+            <p className="auth-enter auth-enter-2 mt-2 text-sm text-syntax-text">
+              Opening secure sign-in…
+            </p>
           </div>
         </div>
       ) : null}
 
-      <h1 className="text-3xl font-semibold tracking-tight text-syntax-text sm:text-4xl">
+      <h1 className="auth-enter auth-enter-1 text-3xl font-semibold tracking-tight text-syntax-text sm:text-4xl">
         Welcome back
       </h1>
-      <p className="mt-3 text-base text-syntax-muted">
+      <p className="auth-enter auth-enter-2 mt-3 text-base text-syntax-muted">
         Sign in to manage your plan and connect the extension later. Notes stay on your device
         for now.
       </p>
 
-      <div className="mt-10 space-y-3">
+      <div className="auth-enter auth-enter-3 mt-10 space-y-3">
         <button
           className="btn-secondary flex h-12 w-full items-center justify-center gap-3 rounded-xl text-sm font-medium disabled:cursor-wait disabled:opacity-60"
           disabled={redirecting}
@@ -124,7 +131,7 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
         </p>
       ) : null}
 
-      <p className="mt-10 text-center text-sm text-syntax-muted">
+      <p className="auth-enter auth-enter-4 mt-10 text-center text-sm text-syntax-muted">
         New here?{' '}
         <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/pricing">
           See pricing

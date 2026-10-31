@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Work_Sans } from 'next/font/google';
-import { SiteFooter } from '@/components/SiteFooter';
-import { SiteHeader } from '@/components/SiteHeader';
-import { MotionRoot } from '@/components/motion/MotionRoot';
+import { SiteChrome } from '@/components/SiteChrome';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -58,11 +56,7 @@ export default function RootLayout({
       lang="en"
     >
       <body className="flex min-h-full flex-col bg-syntax-bg font-sans text-syntax-text antialiased">
-        <SiteHeader />
-        <MotionRoot>
-          <main className="flex-1">{children}</main>
-        </MotionRoot>
-        <SiteFooter />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

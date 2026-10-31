@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+const HANDOFF_VERSION = 1;
+
 export function ExtensionHandoff() {
   const [status, setStatus] = useState<'working' | 'ready' | 'error'>('working');
 
@@ -10,20 +12,33 @@ export function ExtensionHandoff() {
 
     async function mint() {
       try {
-        const response = await fetch('/api/device-token', { method: 'POST' });
+        const response = await fetch('/api/device-token', { method: 'POST', credentials: 'include' });
         if (!response.ok) {
           throw new Error('Could not create a device token.');
         }
 
-        const { token } = (await response.json()) as { token: string };
+        const payload = (await response.json()) as {
+          token: string;
+          expiresAt: string;
+          userId: string;
+        };
+
         if (cancelled) {
           return;
         }
 
         window.postMessage(
-          { source: 'syntaxai-web', type: 'device-token', token },
+          {
+            source: 'syntaxai-web',
+            type: 'syntaxai:auth',
+            version: HANDOFF_VERSION,
+            token: payload.token,
+            expiresAt: payload.expiresAt,
+            userId: payload.userId,
+          },
           window.location.origin,
         );
+
         setStatus('ready');
       } catch {
         if (!cancelled) {
@@ -41,9 +56,9 @@ export function ExtensionHandoff() {
   return (
     <p className="mt-4 text-syntax-muted">
       {status === 'working'
-        ? 'Preparing an extension token…'
+        ? 'Connecting your extension…'
         : status === 'ready'
-          ? 'You can close this tab. Extension pairing ships in the next phase.'
+          ? 'Signed in. Return to the SyntaxAI extension — it should connect automatically.'
           : 'Could not prepare an extension token. Try signing in again.'}
     </p>
   );

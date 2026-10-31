@@ -5,11 +5,33 @@ export const CHROME_STORE_URL =
   process.env.NEXT_PUBLIC_CHROME_STORE_URL ??
   'https://chromewebstore.google.com/detail/syntaxai';
 
+export const BROWSER_ICON_CHROME = '/free-icon-chrome-6125000.png';
+export const BROWSER_ICON_FIREFOX = '/free-icon-firefox-5968827.png';
+
+export const FIREFOX_ADDON_URL =
+  process.env.NEXT_PUBLIC_FIREFOX_ADDON_URL ??
+  'https://addons.mozilla.org/en-US/firefox/addon/syntaxai/';
+
+export const BOOK_CALL_URL = process.env.NEXT_PUBLIC_BOOK_CALL_URL ?? '';
+
 export const HERO_VIDEO_URL = process.env.NEXT_PUBLIC_HERO_VIDEO_URL;
 
 export const SUPPORT_EMAIL = 'hello@syntaxai.app';
 
+export const SOCIAL_LINKS = {
+  discord: process.env.NEXT_PUBLIC_SOCIAL_DISCORD_URL ?? '',
+  twitter: process.env.NEXT_PUBLIC_SOCIAL_TWITTER_URL ?? '',
+  linkedin: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL ?? '',
+  instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM_URL ?? '',
+  tiktok: process.env.NEXT_PUBLIC_SOCIAL_TIKTOK_URL ?? '',
+} as const;
+
 export const PRO_PRICE = '$3.49';
+
+/** Beta: leave false until FOP + Polar. Extension ignores limits when false. */
+export const isBillingEnabled =
+  process.env.NEXT_PUBLIC_BILLING_ENABLED === 'true' &&
+  Boolean(process.env.POLAR_ACCESS_TOKEN && process.env.POLAR_PRODUCT_ID);
 
 export const FREE_LIMITS = {
   notes: 30,

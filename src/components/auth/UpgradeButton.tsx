@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
@@ -9,6 +9,11 @@ export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
   const { data: session, isPending } = authClient.useSession();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   async function upgrade() {
     if (!session?.user) {
@@ -47,7 +52,7 @@ export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
     <div>
       <button
         className="btn-primary mt-8 inline-flex h-11 w-full items-center justify-center rounded-full text-[11px] disabled:cursor-wait disabled:opacity-70"
-        disabled={busy || isPending}
+        disabled={busy || (mounted && isPending)}
         onClick={upgrade}
         type="button"
       >

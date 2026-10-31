@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { AnimatePresence, m } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { authClient } from '@/lib/auth-client';
@@ -10,6 +11,8 @@ type Phase = 'loading' | 'success';
 interface AuthCompleteScreenProps {
   nextPath: string;
 }
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function AuthCompleteScreen({ nextPath }: AuthCompleteScreenProps) {
   const router = useRouter();
@@ -68,54 +71,76 @@ export function AuthCompleteScreen({ nextPath }: AuthCompleteScreenProps) {
 
       <div className="relative flex flex-col items-center text-center">
         <div className="relative flex h-28 w-28 items-center justify-center">
-          {phase === 'loading' ? (
-            <>
-              <span className="auth-complete-ring absolute inset-0 rounded-full border border-white/10" />
-              <span className="auth-complete-ring auth-complete-ring-delay absolute inset-2 rounded-full border border-white/20" />
-              <span className="auth-complete-spinner absolute inset-0 rounded-full border-2 border-transparent border-t-white/90" />
-            </>
-          ) : (
-            <span className="auth-complete-check flex h-20 w-20 items-center justify-center rounded-full border border-white/25 bg-syntax-card shadow-[var(--syntax-glow-strong)]">
-              <svg
-                aria-hidden="true"
-                className="auth-complete-check-icon h-10 w-10 text-syntax-accent"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.5"
-                viewBox="0 0 24 24"
+          <AnimatePresence mode="wait">
+            {phase === 'loading' ? (
+              <m.div
+                key="loading"
+                animate={{ opacity: 1, scale: 1 }}
+                className="absolute inset-0"
+                exit={{ opacity: 0, scale: 0.92 }}
+                initial={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.35, ease: EASE }}
               >
-                <path className="auth-complete-check-path" d="M5 13l4 4L19 7" />
-              </svg>
-            </span>
-          )}
-
-          <Image
-            alt=""
-            aria-hidden
-            className={`absolute h-10 w-10 object-contain transition-opacity duration-500 ${
-              phase === 'success' ? 'opacity-0' : 'opacity-100'
-            }`}
-            height={40}
-            src="/logo-mark.png"
-            width={40}
-          />
+                <span className="auth-complete-ring absolute inset-0 rounded-full border border-white/10" />
+                <span className="auth-complete-ring auth-complete-ring-delay absolute inset-2 rounded-full border border-white/20" />
+                <span className="auth-complete-spinner absolute inset-0 rounded-full border-2 border-transparent border-t-white/90" />
+                <Image
+                  alt=""
+                  aria-hidden
+                  className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 object-contain"
+                  height={40}
+                  src="/logo-mark.png"
+                  width={40}
+                />
+              </m.div>
+            ) : (
+              <m.span
+                key="success"
+                animate={{ opacity: 1, scale: 1 }}
+                className="auth-complete-check flex h-20 w-20 items-center justify-center rounded-full border border-white/25 bg-syntax-card shadow-[var(--syntax-glow-strong)]"
+                initial={{ opacity: 0, scale: 0.82 }}
+                transition={{ duration: 0.5, ease: EASE }}
+              >
+                <svg
+                  aria-hidden="true"
+                  className="auth-complete-check-icon h-10 w-10 text-syntax-accent"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path className="auth-complete-check-path" d="M5 13l4 4L19 7" />
+                </svg>
+              </m.span>
+            )}
+          </AnimatePresence>
         </div>
 
-        <p className="mt-10 font-mono text-xs font-bold uppercase tracking-[0.2em] text-syntax-muted">
-          {phase === 'loading' ? 'SyntaxAI' : 'Success'}
-        </p>
-        <h1 className="mt-3 font-mono text-2xl font-bold uppercase tracking-[0.08em] text-syntax-text sm:text-3xl">
-          {phase === 'loading' ? 'Signing you in' : "You're in"}
-        </h1>
-        <p className="mt-3 max-w-xs text-sm text-syntax-muted">{statusText}</p>
+        <AnimatePresence mode="wait">
+          <m.div
+            key={phase}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-10"
+            initial={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.45, ease: EASE }}
+          >
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-syntax-muted">
+              {phase === 'loading' ? 'SyntaxAI' : 'Success'}
+            </p>
+            <h1 className="mt-3 font-mono text-2xl font-bold uppercase tracking-[0.08em] text-syntax-text sm:text-3xl">
+              {phase === 'loading' ? 'Signing you in' : "You're in"}
+            </h1>
+            <p className="mt-3 max-w-xs text-sm text-syntax-muted">{statusText}</p>
 
-        {phase === 'success' && session?.user?.name ? (
-          <p className="mt-6 text-sm text-syntax-text">
-            Welcome, <span className="font-medium">{session.user.name}</span>
-          </p>
-        ) : null}
+            {phase === 'success' && session?.user?.name ? (
+              <p className="mt-6 text-sm text-syntax-text">
+                Welcome, <span className="font-medium">{session.user.name}</span>
+              </p>
+            ) : null}
+          </m.div>
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-syntax-border bg-syntax-bg/95 backdrop-blur-md">
+    <header className="relative z-40 border-b border-syntax-border bg-syntax-bg">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-6">
         <Link className="flex items-center gap-3" href="/" onClick={() => setOpen(false)}>
           <Logo className="h-8 w-8" />
