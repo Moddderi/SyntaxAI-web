@@ -40,5 +40,8 @@ export async function GET(request: NextRequest) {
       analyzeSnippetPath: '/api/v1/ai/analyze-snippet',
       analyzeMixedPath: '/api/v1/ai/analyze-mixed',
     },
+    support: {
+      feedbackPath: '/api/v1/feedback',
+    },
   });
 }

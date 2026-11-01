@@ -61,10 +61,16 @@ export async function createJsonChatCompletion(
   const payload = (await response.json()) as OpenAiChatCompletionResponse;
 
   if (!response.ok) {
-    throw new OpenAiProxyError(
-      payload.error?.message ?? `OpenAI request failed with status ${response.status}.`,
-      response.status >= 400 && response.status < 500 ? response.status : 502,
-    );
+    const message =
+      payload.error?.message ?? `OpenAI request failed with status ${response.status}.`;
+
+    // Never forward OpenAI auth/forbidden statuses to the extension — they look like
+    // client auth failures. Rate limits stay 429; other upstream 4xx become 502.
+    if (response.status === 429) {
+      throw new OpenAiProxyError(message, 429);
+    }
+
+    throw new OpenAiProxyError(message, 502);
   }
 
   const content = payload.choices?.[0]?.message?.content?.trim();

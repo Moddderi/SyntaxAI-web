@@ -129,10 +129,15 @@ Base URL: `NEXT_PUBLIC_SITE_URL` (e.g. `https://syntaxai.app`). All extension ro
 | `POST` | `/api/v1/notes` | Push batch from extension |
 | `POST` | `/api/v1/ai/analyze-snippet` | Snippet / OCR analysis (server OpenAI key) |
 | `POST` | `/api/v1/ai/analyze-mixed` | Page-context mixed note analysis |
+| `POST` | `/api/v1/feedback` | Beta feedback / bug report → email `hello@syntaxai.app` (Resend) |
 
 ### AI proxy
 
 Requires `Authorization: Bearer sat_…` and server env `OPENAI_API_KEY` (never `NEXT_PUBLIC_*`).
+
+### Feedback / bug reports
+
+Requires `Authorization: Bearer sat_…` and server env `RESEND_API_KEY`. Optional: `RESEND_FROM_EMAIL`, `FEEDBACK_TO_EMAIL` (default `hello@syntaxai.app`).
 
 `POST /api/v1/ai/analyze-snippet`
 
