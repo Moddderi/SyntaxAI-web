@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { cookies } from 'next/headers';
 import { SignInForm } from '@/components/auth/SignInForm';
 import { SignInShell } from '@/components/auth/SignInShell';
 import { safeNextPath } from '@/lib/paths';
@@ -14,18 +13,9 @@ export default async function SignInPage({
 }: {
   searchParams: Promise<{ next?: string; ref?: string }>;
 }) {
-  const { next, ref } = await searchParams;
+  const { next } = await searchParams;
   const githubEnabled = Boolean(process.env.GITHUB_CLIENT_ID);
-
-  if (ref && /^[a-f0-9]{8}$/i.test(ref)) {
-    const cookieStore = await cookies();
-    cookieStore.set('syntax_ref', ref.toLowerCase(), {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 30,
-      path: '/',
-      sameSite: 'lax',
-    });
-  }
+  // Invite ?ref= is stored as httpOnly cookie in middleware (cannot set cookies in RSC)
 
   return (
     <SignInShell>
