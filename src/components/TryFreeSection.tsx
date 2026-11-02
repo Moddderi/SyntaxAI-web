@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { BrowserInstallButtons } from '@/components/BrowserInstallButtons';
 import { Reveal } from '@/components/motion/Reveal';
 import { SectionAmbient } from '@/components/SectionAmbient';
-import { FREE_LIMITS, PRO_PRICE } from '@/lib/site';
+import { FREE_LIMITS, isBillingEnabled, PRO_PRICE } from '@/lib/site';
 
 export function TryFreeSection() {
   return (
@@ -19,13 +19,25 @@ export function TryFreeSection() {
           </p>
           <h2 className="mt-3 font-mono text-3xl font-bold uppercase tracking-[0.08em] text-syntax-text md:text-4xl">
             Try the{' '}
-            <span className="accent-glow text-syntax-accent">free</span> version
+            <span className="accent-glow text-syntax-accent">
+              {isBillingEnabled ? 'free' : 'beta'}
+            </span>{' '}
+            version
           </h2>
           <p className="mt-5 text-base leading-relaxed text-syntax-muted">
-            Install SyntaxAI in your browser and start building a personal code library —{' '}
-            {FREE_LIMITS.notes} notes, {FREE_LIMITS.contextSaves} context captures, and{' '}
-            {FREE_LIMITS.photoReads} photo reads included. Pro is {PRO_PRICE}/mo when you
-            outgrow the limits.
+            {isBillingEnabled ? (
+              <>
+                Install SyntaxAI in your browser and start building a personal code library —{' '}
+                {FREE_LIMITS.notes} notes, {FREE_LIMITS.contextSaves} context captures, and{' '}
+                {FREE_LIMITS.photoReads} photo reads included. Pro is {PRO_PRICE}/mo when you
+                outgrow the limits.
+              </>
+            ) : (
+              <>
+                Install SyntaxAI and build your library with full access during open beta. Sign in
+                to sync notes and invite friends — Pro credits unlock when billing launches.
+              </>
+            )}
           </p>
         </Reveal>
 
@@ -37,11 +49,11 @@ export function TryFreeSection() {
             </p>
             <BrowserInstallButtons className="relative mt-6 justify-center" />
             <p className="relative mt-6 text-center text-xs text-syntax-muted">
-              No account required to capture locally.{' '}
+              Capture locally first.{' '}
               <Link className="text-syntax-text underline-offset-4 hover:underline" href="/auth/signin">
                 Sign in
               </Link>{' '}
-              for billing and referrals.
+              {isBillingEnabled ? 'for billing and referrals.' : 'to sync and share your invite link.'}
             </p>
           </div>
         </Reveal>
@@ -51,7 +63,7 @@ export function TryFreeSection() {
             className="group inline-flex items-center gap-1 text-sm font-medium text-syntax-muted transition hover:text-syntax-text"
             href="/pricing"
           >
-            Compare Free vs Pro
+            {isBillingEnabled ? 'Compare Free vs Pro' : 'Why beta is free'}
             <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
               →
             </span>

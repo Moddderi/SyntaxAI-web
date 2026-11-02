@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { isBillingEnabled } from '@/lib/site';
 
 export function AccountActions({
   isPro,
@@ -46,23 +47,34 @@ export function AccountActions({
 
   return (
     <div className={`flex flex-col gap-3 ${fullWidth ? '' : 'mt-8 sm:flex-row'}`}>
-      {isPro ? (
-        <button
-          className={`btn-primary inline-flex h-12 items-center justify-center rounded-full px-6 text-[11px] disabled:opacity-70 ${widthClass}`}
-          disabled={busy !== null}
-          onClick={openPortal}
-          type="button"
-        >
-          {busy === 'portal' ? 'Opening…' : 'Manage billing'}
-        </button>
+      {isBillingEnabled ? (
+        isPro ? (
+          <button
+            className={`btn-primary inline-flex h-12 items-center justify-center rounded-full px-6 text-[11px] disabled:opacity-70 ${widthClass}`}
+            disabled={busy !== null}
+            onClick={openPortal}
+            type="button"
+          >
+            {busy === 'portal' ? 'Opening…' : 'Manage billing'}
+          </button>
+        ) : (
+          <button
+            className={`btn-primary inline-flex h-12 items-center justify-center rounded-full px-6 text-[11px] disabled:opacity-70 ${widthClass}`}
+            disabled={busy !== null}
+            onClick={() => router.push('/pricing')}
+            type="button"
+          >
+            Upgrade to Pro
+          </button>
+        )
       ) : (
         <button
           className={`btn-primary inline-flex h-12 items-center justify-center rounded-full px-6 text-[11px] disabled:opacity-70 ${widthClass}`}
           disabled={busy !== null}
-          onClick={() => router.push('/pricing')}
+          onClick={() => router.push('/account')}
           type="button"
         >
-          Upgrade to Pro
+          Invite friends
         </button>
       )}
       <button

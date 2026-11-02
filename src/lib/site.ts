@@ -28,10 +28,11 @@ export const SOCIAL_LINKS = {
 
 export const PRO_PRICE = '$3.49';
 
-/** Beta: leave false until FOP + Polar. Extension ignores limits when false. */
-export const isBillingEnabled =
-  process.env.NEXT_PUBLIC_BILLING_ENABLED === 'true' &&
-  Boolean(process.env.POLAR_ACCESS_TOKEN && process.env.POLAR_PRODUCT_ID);
+/**
+ * Paid plans / checkout UI. Keep false during open beta (FOP + Polar not live).
+ * Must be NEXT_PUBLIC so client components (UpgradeButton, nav) stay in sync.
+ */
+export const isBillingEnabled = process.env.NEXT_PUBLIC_BILLING_ENABLED === 'true';
 
 export const FREE_LIMITS = {
   notes: 30,

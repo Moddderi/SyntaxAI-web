@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { isBillingEnabled } from '@/lib/site';
 
 export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
   const router = useRouter();
@@ -14,6 +16,22 @@ export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (!isBillingEnabled) {
+    return (
+      <div className="mt-8">
+        <Link
+          className="btn-primary inline-flex h-11 w-full items-center justify-center rounded-full text-[11px]"
+          href={session?.user ? '/account' : '/auth/signin?next=/account'}
+        >
+          {session?.user ? 'Invite friends' : 'Sign in to invite'}
+        </Link>
+        <p className="mt-3 text-center text-xs text-syntax-muted">
+          Checkout paused during beta — share invites instead.
+        </p>
+      </div>
+    );
+  }
 
   async function upgrade() {
     if (!session?.user) {

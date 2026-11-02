@@ -5,11 +5,12 @@ import Link from 'next/link';
 import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
 import { ChromeStoreButton } from './ChromeStoreButton';
+import { isBillingEnabled } from '@/lib/site';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/#features', label: 'Features' },
-  { href: '/pricing', label: 'Pricing' },
+  { href: '/pricing', label: isBillingEnabled ? 'Pricing' : 'Beta' },
   { href: '/privacy', label: 'Privacy' },
 ] as const;
 

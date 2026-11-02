@@ -132,13 +132,13 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
       ) : null}
 
       <p className="auth-enter auth-enter-4 mt-10 text-center text-sm text-syntax-muted">
-        New here?{' '}
-        <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/pricing">
-          See pricing
-        </Link>{' '}
-        or install the{' '}
+        New here? Install the{' '}
         <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/">
           Chrome extension
+        </Link>{' '}
+        or read about{' '}
+        <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/pricing">
+          open beta
         </Link>
         .
       </p>

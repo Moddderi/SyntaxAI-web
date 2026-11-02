@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { SocialLinks } from '@/components/SocialLinks';
-import { SUPPORT_EMAIL } from '@/lib/site';
+import { isBillingEnabled, SUPPORT_EMAIL } from '@/lib/site';
 
 const YEAR = new Date().getFullYear();
 
@@ -23,7 +23,7 @@ export function SiteFooter() {
 
         <div className="flex flex-wrap gap-4 text-sm text-syntax-muted">
           <Link className="transition hover:text-syntax-text" href="/pricing">
-            Pricing
+            {isBillingEnabled ? 'Pricing' : 'Beta'}
           </Link>
           <Link className="transition hover:text-syntax-text" href="/#faq">
             FAQ

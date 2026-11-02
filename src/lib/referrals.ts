@@ -8,17 +8,17 @@ export const REFERRAL_MILESTONES = [
   {
     friends: 1,
     title: '1 friend',
-    reward: '1 week of Pro — on us',
+    reward: '1 week Pro at launch',
   },
   {
     friends: 3,
     title: '3 friends',
-    reward: '1 month Pro free',
+    reward: '1 month Pro at launch',
   },
   {
     friends: 7,
     title: '7 friends',
-    reward: '3 months Pro free',
+    reward: '3 months Pro at launch',
   },
 ] as const;
 

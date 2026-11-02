@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ChromeStoreButton } from './ChromeStoreButton';
 import { HeroMedia } from './HeroMedia';
 import { MarketingBackdrop } from './MarketingBackdrop';
-import { PRO_PRICE } from '@/lib/site';
+import { isBillingEnabled, PRO_PRICE } from '@/lib/site';
 
 export function HeroSection() {
   return (
@@ -40,7 +40,9 @@ export function HeroSection() {
             </div>
 
             <p className="hero-enter hero-enter-4 mt-5 text-sm text-syntax-muted">
-              Free to start · Pro from {PRO_PRICE}/mo · Sign in for billing
+              {isBillingEnabled
+                ? `Free to start · Pro from ${PRO_PRICE}/mo · Sign in for billing`
+                : 'Open beta · free full access · invite friends for launch rewards'}
             </p>
           </div>
 

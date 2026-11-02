@@ -1,9 +1,11 @@
 import type { ReactNode } from 'react';
 import Image from 'next/image';
+import { BetaAccessPanel } from '@/components/account/BetaAccessPanel';
 import { ProfileStats } from '@/components/account/ProfileStats';
 import { ReferralProgress } from '@/components/account/ReferralProgress';
 import { SubscriptionPanel } from '@/components/account/SubscriptionPanel';
 import { SignOutButton } from '@/components/auth/SignOutButton';
+import { isBillingEnabled } from '@/lib/site';
 
 interface AccountDashboardProps {
   name: string;
@@ -18,9 +20,19 @@ interface AccountDashboardProps {
   checkoutPending: boolean;
 }
 
-function AccountCard({ label, children }: { label: string; children: ReactNode }) {
+function AccountCard({
+  label,
+  children,
+  className = '',
+}: {
+  label: string;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <article className="lift-card flex min-h-[26rem] flex-col rounded-3xl border border-syntax-border bg-syntax-card p-6 md:min-h-[28rem] md:p-7">
+    <article
+      className={`lift-card flex min-h-[26rem] flex-col rounded-3xl border border-syntax-border bg-syntax-card p-6 md:min-h-[28rem] md:p-7 ${className}`}
+    >
       <p className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-syntax-muted">
         {label}
       </p>
@@ -66,12 +78,17 @@ export function AccountDashboard({
           {daysActive === 1 ? 'st' : daysActive === 2 ? 'nd' : daysActive === 3 ? 'rd' : 'th'} day
           building your SyntaxAI library.
         </p>
+        {!isBillingEnabled ? (
+          <p className="mt-4 inline-block rounded-xl border border-white/12 bg-syntax-hover px-4 py-2 text-sm text-syntax-text shadow-[var(--syntax-glow)]">
+            Open beta — invite friends and earn Pro credits for launch.
+          </p>
+        ) : null}
         {showWelcome ? (
           <p className="mt-4 inline-block rounded-xl border border-white/12 bg-syntax-hover px-4 py-2 text-sm text-syntax-text shadow-[var(--syntax-glow)]">
             Welcome back — your account is ready.
           </p>
         ) : null}
-        {checkoutPending ? (
+        {checkoutPending && isBillingEnabled ? (
           <p className="mt-4 inline-block rounded-xl border border-white/12 bg-syntax-hover px-4 py-2 text-sm text-syntax-text">
             Payment received — refresh if plan still shows Free.
           </p>
@@ -112,8 +129,8 @@ export function AccountDashboard({
           </div>
         </AccountCard>
 
-        <AccountCard label="Subscription">
-          <SubscriptionPanel isPro={isPro} />
+        <AccountCard label={isBillingEnabled ? 'Subscription' : 'Access'}>
+          {isBillingEnabled ? <SubscriptionPanel isPro={isPro} /> : <BetaAccessPanel />}
         </AccountCard>
 
         <AccountCard label="Invite friends">

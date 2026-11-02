@@ -14,7 +14,8 @@ export function ReferralProgress({
     <div className="flex flex-1 flex-col gap-5">
       <div>
         <p className="text-sm text-syntax-muted">
-          Invite friends — unlock Pro rewards as your network grows.
+          Share SyntaxAI — every friend who signs up counts. Pro rewards unlock when paid plans
+          launch.
         </p>
         <div className="mt-4 flex items-end justify-between gap-3">
           <p className="font-mono text-5xl font-bold tabular-nums leading-none">{referralCount}</p>
