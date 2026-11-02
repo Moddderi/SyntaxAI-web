@@ -12,7 +12,9 @@ export const FIREFOX_ADDON_URL =
   process.env.NEXT_PUBLIC_FIREFOX_ADDON_URL ??
   'https://addons.mozilla.org/en-US/firefox/addon/syntaxai/';
 
-export const BOOK_CALL_URL = process.env.NEXT_PUBLIC_BOOK_CALL_URL ?? '';
+export const BOOK_CALL_URL =
+  process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
+  'https://calendly.com/kiricenkooleg123/30min';
 
 export const HERO_VIDEO_URL = process.env.NEXT_PUBLIC_HERO_VIDEO_URL;
 
