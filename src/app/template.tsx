@@ -24,6 +24,7 @@ export default function Template({ children }: { children: ReactNode }) {
 
   return (
     <m.div
+      key={pathname}
       animate={{ opacity: 1, y: 0 }}
       initial={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}

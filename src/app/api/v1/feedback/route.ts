@@ -62,6 +62,18 @@ export async function POST(request: NextRequest) {
     }
 
     console.error('[SyntaxAI] feedback send failed', error);
-    return extensionJson({ error: 'Failed to send feedback.' }, 502);
+
+    // Surface Resend config issues (unverified domain, invalid from, etc.)
+    const isConfigHint =
+      /domain|verified|from|sender|invalid|not allowed|forbidden/i.test(message);
+
+    return extensionJson(
+      {
+        error: isConfigHint
+          ? message
+          : 'Failed to send feedback.',
+      },
+      502,
+    );
   }
 }
