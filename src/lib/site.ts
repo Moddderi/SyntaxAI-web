@@ -1,6 +1,17 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://syntaxai.app';
 
+/**
+ * Public API origin for the extension (Railway).
+ * Prefer api.syntaxai.app so traffic never hits Vercel CDN/functions.
+ * Falls back to the marketing site when unset (local / single-host).
+ */
+export const API_PUBLIC_URL = (
+  process.env.NEXT_PUBLIC_API_URL ??
+  process.env.API_PUBLIC_URL ??
+  SITE_URL
+).replace(/\/$/, '');
+
 export const CHROME_STORE_URL =
   process.env.NEXT_PUBLIC_CHROME_STORE_URL ??
   'https://chromewebstore.google.com/detail/syntaxai';

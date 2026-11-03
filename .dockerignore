@@ -1,0 +1,11 @@
+# Dependencies / build
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env*
+!.env.example
+AGENTS.md
+CLAUDE.md
+.cursor

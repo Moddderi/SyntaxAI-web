@@ -59,8 +59,13 @@ export const auth = betterAuth({
     authBaseUrl,
     'http://localhost:3000',
     'https://syntaxai-web.vercel.app',
+    'https://syntax-ai-web.vercel.app',
     'https://syntaxai.app',
     'https://www.syntaxai.app',
+    'https://api.syntaxai.app',
+    ...(process.env.RAILWAY_PUBLIC_DOMAIN
+      ? [`https://${process.env.RAILWAY_PUBLIC_DOMAIN}`]
+      : []),
   ],
   database: drizzleAdapter(db, {
     provider: 'pg',

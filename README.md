@@ -96,9 +96,60 @@ Update every provider to use `https://syntaxai.app` (keep `http://localhost:3000
 - `/account` after login
 - Optional: `www` redirects to apex (or the reverse), per your Vercel domain settings
 
+## Production architecture (Vercel + Railway + Neon)
+
+| Layer | Host | What |
+|-------|------|------|
+| UI | **Vercel** (`syntaxai.app` / `www`) | Marketing, `/account`, OAuth pages, `POST /api/device-token`, `/api/auth/*` |
+| API | **Railway** (`api.syntaxai.app`) | `/api/v1/*`, `/api/me`, AI, notes, feedback — **extension calls this host** |
+| DB | **Neon** | Shared Postgres |
+
+### Why
+
+Vercel Hobby counts every Function + CDN hit. The extension’s sync/AI traffic must **not** go through Vercel. Railway ($5) bills for compute, not per-invocation caps the same way.
+
+### Railway setup
+
+1. New Railway project → Deploy from `Moddderi/SyntaxAI-web` (Dockerfile / `railway.toml`).
+2. Set the **same** secrets as Vercel (especially `DATABASE_URL`, `BETTER_AUTH_SECRET`, OAuth, `OPENAI_API_KEY`, `RESEND_*`).
+3. Railway env extras:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://syntaxai.app
+BETTER_AUTH_URL=https://syntaxai.app
+NEXT_PUBLIC_API_URL=https://api.syntaxai.app
+NEXT_PUBLIC_BILLING_ENABLED=false
+PORT=3000
+```
+
+Do **not** set `RAILWAY_API_ORIGIN` on Railway (only on Vercel).
+
+4. Custom domain: `api.syntaxai.app` → Railway (Cloudflare CNAME, DNS only).
+5. Health: `GET https://api.syntaxai.app/api/health` → `{ ok: true }`.
+
+### Vercel env (after Railway is live)
+
+```env
+RAILWAY_API_ORIGIN=https://api.syntaxai.app
+NEXT_PUBLIC_API_URL=https://api.syntaxai.app
+```
+
+This proxies browser `/api/v1/*` and `/api/me` to Railway. Extension must still use `https://api.syntaxai.app` **directly** (host_permissions).
+
+### Extension
+
+```ts
+const SITE_URL = 'https://syntaxai.app';       // login / device-token
+const API_BASE = 'https://api.syntaxai.app';  // Bearer API
+```
+
+---
+
 ## Extension API (v1)
 
-Base URL: `NEXT_PUBLIC_SITE_URL` (e.g. `https://syntaxai.app`). All extension routes send CORS headers for `chrome-extension://` origins configured in Better Auth `trustedOrigins`.
+**API base (production):** `https://api.syntaxai.app` (`NEXT_PUBLIC_API_URL`).  
+**Site (login):** `https://syntaxai.app`.  
+CORS: `Access-Control-Allow-Origin: *` on extension JSON routes.
 
 ### Auth flow
 
