@@ -7,7 +7,6 @@ import type { NextConfig } from 'next';
 const railwayApiOrigin = process.env.RAILWAY_API_ORIGIN?.replace(/\/$/, '');
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
   images: {
     remotePatterns: [
       {
