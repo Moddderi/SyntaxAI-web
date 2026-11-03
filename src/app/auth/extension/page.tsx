@@ -24,8 +24,8 @@ export default async function ExtensionAuthPage() {
       </h1>
       <div className="section-neon-line" aria-hidden="true" />
       <p className="mt-6 text-syntax-muted">
-        Signed in as {session.user.email}. The extension will pick up this session in a
-        later release.
+        Signed in as {session.user.email}. Keep this tab open a few seconds while we hand the
+        session to your installed SyntaxAI extension.
       </p>
       <ExtensionHandoff />
     </div>
