@@ -110,7 +110,7 @@ Vercel Hobby counts every Function + CDN hit. The extension’s sync/AI traffic 
 
 ### Railway setup
 
-1. New Railway project → Deploy from `Moddderi/SyntaxAI-web` (Dockerfile / `railway.toml`).
+1. New Railway project → Deploy from `Moddderi/SyntaxAI-web` (`railway.toml` uses **Nixpacks** + `next start`; `Dockerfile` is optional fallback).
 2. Set the **same** secrets as Vercel (especially `DATABASE_URL`, `BETTER_AUTH_SECRET`, OAuth, `OPENAI_API_KEY`, `RESEND_*`).
 3. Railway env extras:
 
@@ -119,12 +119,11 @@ NEXT_PUBLIC_SITE_URL=https://syntaxai.app
 BETTER_AUTH_URL=https://syntaxai.app
 NEXT_PUBLIC_API_URL=https://api.syntaxai.app
 NEXT_PUBLIC_BILLING_ENABLED=false
-PORT=3000
 ```
 
-Do **not** set `RAILWAY_API_ORIGIN` on Railway (only on Vercel).
+Do **not** set `RAILWAY_API_ORIGIN` on Railway (only on Vercel). Do **not** set `PORT` manually.
 
-4. Custom domain: `api.syntaxai.app` → Railway (Cloudflare CNAME, DNS only).
+4. Custom domain: `api.syntaxai.app` → port **3000** (or Railway’s `$PORT` if the UI asks — match `startCommand`). Cloudflare CNAME, DNS only.
 5. Health: `GET https://api.syntaxai.app/api/health` → `{ ok: true }`.
 
 ### Vercel env (after Railway is live)
