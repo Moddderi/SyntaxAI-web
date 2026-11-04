@@ -53,6 +53,81 @@ export const FREE_LIMITS = {
   photoReads: 10,
 } as const;
 
+/** Real extension screenshots (public/shots). Dimensions are the source PNG sizes. */
+export const SHOTS = {
+  library: {
+    src: '/shots/library.png',
+    width: 1500,
+    height: 951,
+    alt: 'SyntaxAI dashboard: all notes with stack icons, titles and code previews',
+  },
+  stack: {
+    src: '/shots/stack.png',
+    width: 1226,
+    height: 500,
+    alt: 'SyntaxAI stack view: notes grouped by JavaScript, React and Angular',
+  },
+  insights: {
+    src: '/shots/insights.png',
+    width: 1237,
+    height: 778,
+    alt: 'SyntaxAI usage and insights: stack breakdown, streaks and capture activity heatmap',
+  },
+  sidepanel: {
+    src: '/shots/sidepanel.png',
+    width: 369,
+    height: 898,
+    alt: 'SyntaxAI side panel: paste code or drop an image, then save to library',
+  },
+} as const;
+
+export const HOW_IT_WORKS = [
+  {
+    step: '01',
+    title: 'Capture',
+    description:
+      'Paste code, drop a screenshot, or hit the hotkey on any page. The side panel opens — you never leave the tab.',
+  },
+  {
+    step: '02',
+    title: 'AI files it',
+    description:
+      'SyntaxAI writes the title, tags the language and framework, and keeps the code clean and readable.',
+  },
+  {
+    step: '03',
+    title: 'Find it fast',
+    description:
+      'Search by text, tag or stack. Notes live locally first, then sync to your account.',
+  },
+] as const;
+
+export const STACK_MARQUEE = [
+  'TypeScript',
+  'React',
+  'Python',
+  'Next.js',
+  'Go',
+  'Rust',
+  'Vue',
+  'Angular',
+  'Node.js',
+  'PostgreSQL',
+  'Docker',
+  'Tailwind',
+  'Svelte',
+  'Java',
+  'C#',
+  'SQL',
+] as const;
+
+export const INSIGHTS_FEATURE = {
+  title: 'Know what you build',
+  description:
+    'Stack breakdown, capture streaks and a GitHub-style activity map — see where your learning actually goes.',
+  points: ['Stack breakdown by brand color', 'Streaks & momentum', 'Capture activity heatmap'],
+} as const;
+
 export const FEATURE_HIGHLIGHTS = [
   {
     title: 'Sees languages, libraries, frameworks',

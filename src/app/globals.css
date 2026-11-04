@@ -1020,3 +1020,375 @@ body {
   background: rgb(255 255 255 / 0.2);
   color: var(--syntax-text);
 }
+
+/* ───────────────────────── Landing polish (v2) ───────────────────────── */
+
+@property --beam-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
+
+/* Film grain over the whole site — adds depth to flat black */
+body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  content: "";
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.045;
+  pointer-events: none;
+  position: fixed;
+  z-index: 200;
+}
+
+/* Shimmering headline accent (stays on the black/white palette) */
+.text-shimmer {
+  animation: text-shimmer-sweep 6s linear infinite;
+  background: linear-gradient(
+    105deg,
+    #fff 0%,
+    #fff 38%,
+    #8a8a8a 50%,
+    #fff 62%,
+    #fff 100%
+  );
+  background-clip: text;
+  background-size: 260% 100%;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgb(255 255 255 / 0.28));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes text-shimmer-sweep {
+  0% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -130% 0;
+  }
+}
+
+/* Live pulse dot for the beta badge */
+.live-dot {
+  background: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 0 10px rgb(255 255 255 / 0.9);
+  height: 7px;
+  position: relative;
+  width: 7px;
+}
+
+.live-dot::after {
+  animation: live-dot-ping 2s ease-out infinite;
+  border: 1px solid rgb(255 255 255 / 0.7);
+  border-radius: inherit;
+  content: "";
+  inset: -4px;
+  position: absolute;
+}
+
+@keyframes live-dot-ping {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+/* Soft expanding ring on the main CTA */
+.cta-pulse {
+  position: relative;
+}
+
+.cta-pulse::after {
+  animation: cta-ring 2.8s ease-out infinite;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgb(255 255 255 / 0.35);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+@keyframes cta-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0.35);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 14px rgb(255 255 255 / 0);
+  }
+}
+
+/* Rotating light beam around product windows */
+.hero-frame::before {
+  animation: beam-spin 7s linear infinite;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    rgb(255 255 255 / 0.95) 35deg,
+    transparent 85deg,
+    transparent 190deg,
+    rgb(255 255 255 / 0.4) 245deg,
+    transparent 300deg
+  );
+  border-radius: 1rem;
+  content: "";
+  inset: -1px;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+@keyframes beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Floating chips around the hero window (uses `translate` so 3D `transform` still applies) */
+.hero-float {
+  animation: hero-float-y 6s ease-in-out infinite;
+}
+
+.hero-float--b {
+  animation-delay: -1.5s;
+  animation-duration: 7s;
+}
+
+.hero-float--c {
+  animation-delay: -3s;
+  animation-duration: 5.5s;
+}
+
+.hero-float--d {
+  animation-delay: -4.2s;
+  animation-duration: 6.5s;
+}
+
+@keyframes hero-float-y {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -12px;
+  }
+}
+
+/* Infinite tech marquee */
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee__track {
+  animation: marquee-scroll 42s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Connector between "how it works" steps */
+.steps-line {
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.22), transparent);
+  height: 1px;
+  left: 14%;
+  overflow: hidden;
+  position: absolute;
+  right: 14%;
+  top: 3.15rem;
+}
+
+.steps-line::after {
+  animation: steps-travel 3.6s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 18%;
+}
+
+@keyframes steps-travel {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 102%;
+  }
+}
+
+/* Cursor-following light on cards */
+.spotlight {
+  isolation: isolate;
+  position: relative;
+}
+
+.spotlight::before,
+.spotlight::after {
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 0.4s ease;
+}
+
+.spotlight::before {
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 255 255 / 0.075),
+    transparent 65%
+  );
+  z-index: 2;
+}
+
+.spotlight::after {
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 255 255 / 0.6),
+    transparent 70%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+  z-index: 3;
+}
+
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Screenshot wells inside feature cards */
+.shot-well {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.03);
+}
+
+.shot-fade-bottom::after {
+  background: linear-gradient(to top, var(--syntax-bg) 0%, transparent 100%);
+  bottom: 0;
+  content: "";
+  height: 38%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+
+.icon-tile {
+  box-shadow: var(--syntax-glow);
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+
+.spotlight:hover .icon-tile {
+  border-color: rgb(255 255 255 / 0.35);
+  transform: scale(1.08) rotate(-4deg);
+}
+
+/* Hotspots over the dashboard screenshot */
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.hotspot__dot {
+  background: #fff;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.18), 0 0 18px rgb(255 255 255 / 0.8);
+  display: block;
+  height: 12px;
+  position: relative;
+  width: 12px;
+}
+
+.hotspot__dot::after {
+  animation: live-dot-ping 2.4s ease-out infinite;
+  border: 1px solid rgb(255 255 255 / 0.8);
+  border-radius: inherit;
+  content: "";
+  inset: -6px;
+  position: absolute;
+}
+
+.hotspot__label {
+  backdrop-filter: blur(10px);
+  background: rgb(0 0 0 / 0.82);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.55);
+  color: var(--syntax-text);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  left: 22px;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.hotspot__label--left {
+  left: auto;
+  right: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-shimmer,
+  .live-dot::after,
+  .cta-pulse::after,
+  .hero-frame::before,
+  .hero-float,
+  .marquee__track,
+  .steps-line::after,
+  .hotspot__dot::after {
+    animation: none;
+  }
+
+  .text-shimmer {
+    -webkit-text-fill-color: #fff;
+    background: none;
+    color: #fff;
+  }
+
+  .icon-tile,
+  .spotlight:hover .icon-tile {
+    transform: none;
+    transition: none;
+  }
+}
