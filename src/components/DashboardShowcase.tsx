@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { Reveal } from '@/components/motion/Reveal';
 import { SectionHead } from '@/components/SectionHead';
-import { SHOTS } from '@/lib/site';
+import { SHOTS } from '@/lib/shots';
 
 /** Positions are percentages over the library screenshot. */
 const HOTSPOTS = [
@@ -67,10 +67,8 @@ export function DashboardShowcase() {
                   <Image
                     alt={library.alt}
                     className="h-auto w-full"
-                    height={library.height}
-                    sizes="(min-width: 1152px) 1100px, 100vw"
                     src={library.src}
-                    width={library.width}
+                    unoptimized
                   />
                   <span aria-hidden className="feature-shot__scan" />
 

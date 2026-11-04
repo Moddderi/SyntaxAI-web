@@ -1,11 +1,7 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
-import {
-  FEATURE_GRID,
-  FEATURE_HIGHLIGHTS,
-  INSIGHTS_FEATURE,
-  SHOTS,
-} from '@/lib/site';
+import { FEATURE_GRID, FEATURE_HIGHLIGHTS, INSIGHTS_FEATURE } from '@/lib/site';
+import { SHOTS } from '@/lib/shots';
 import { Reveal } from '@/components/motion/Reveal';
 import { SpotlightCard } from '@/components/motion/SpotlightCard';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
@@ -18,7 +14,7 @@ function FeatureCheck({ children }: { children: string }) {
     <li className="flex items-center gap-2.5 text-sm text-syntax-muted">
       <svg
         aria-hidden="true"
-        className="h-4 w-4 shrink-0 text-syntax-text"
+        className="h-4 w-4 shrink-0 text-syntax-brand"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
@@ -155,10 +151,8 @@ export function FeaturesSection() {
                   <Image
                     alt={sidepanel.alt}
                     className="mx-auto mt-6 h-auto w-[74%] max-w-[300px] rounded-xl border border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out group-hover:-translate-y-2"
-                    height={sidepanel.height}
-                    sizes="(min-width: 1024px) 300px, 70vw"
                     src={sidepanel.src}
-                    width={sidepanel.width}
+                    unoptimized
                   />
                 </ShotWell>
                 <TitleWithIcon icon={<IconPanel />}>{captureFeature.title}</TitleWithIcon>
@@ -184,10 +178,8 @@ export function FeaturesSection() {
                   <Image
                     alt={stack.alt}
                     className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                    height={stack.height}
-                    sizes="(min-width: 1024px) 640px, 100vw"
                     src={stack.src}
-                    width={stack.width}
+                    unoptimized
                   />
                 </ShotWell>
                 <TitleWithIcon icon={<IconLayers />}>{stackFeature.title}</TitleWithIcon>
@@ -209,10 +201,8 @@ export function FeaturesSection() {
                   <Image
                     alt={insights.alt}
                     className="h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                    height={insights.height}
-                    sizes="(min-width: 1024px) 640px, 100vw"
                     src={insights.src}
-                    width={insights.width}
+                    unoptimized
                   />
                 </ShotWell>
                 <TitleWithIcon icon={<IconChart />}>{INSIGHTS_FEATURE.title}</TitleWithIcon>

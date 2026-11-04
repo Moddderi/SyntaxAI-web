@@ -23,7 +23,7 @@ export function SectionHead({
   return (
     <div className={`flex max-w-2xl flex-col ${alignClass} ${className}`}>
       {label ? (
-        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-syntax-muted">
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-syntax-brand">
           {label}
         </p>
       ) : null}

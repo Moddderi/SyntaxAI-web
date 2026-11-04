@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
 import { ChromeStoreButton } from './ChromeStoreButton';
@@ -16,6 +17,17 @@ const NAV_LINKS = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  /** "Home" must always land at the very top (and drop any #hash), even when already on `/`. */
+  const goTop = (event: MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (pathname === '/') {
+      event.preventDefault();
+      window.history.replaceState(null, '', '/');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     if (!open) {
@@ -35,7 +47,7 @@ export function SiteHeader() {
   return (
     <header className="relative z-40 border-b border-syntax-border bg-syntax-bg">
       <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-6">
-        <Link className="flex items-center gap-3" href="/" onClick={() => setOpen(false)}>
+        <Link className="flex items-center gap-3" href="/" onClick={goTop}>
           <Logo className="h-8 w-8" />
           <span className="font-mono text-sm font-bold uppercase tracking-[0.14em] text-syntax-text">
             SyntaxAI
@@ -48,6 +60,7 @@ export function SiteHeader() {
               key={link.href}
               className="text-sm font-medium text-syntax-muted transition hover:text-syntax-text"
               href={link.href}
+              onClick={link.href === '/' ? goTop : undefined}
             >
               {link.label}
             </Link>
@@ -97,7 +110,7 @@ export function SiteHeader() {
                 key={link.href}
                 className="text-base font-medium text-syntax-muted transition hover:text-syntax-text"
                 href={link.href}
-                onClick={() => setOpen(false)}
+                onClick={link.href === '/' ? goTop : () => setOpen(false)}
               >
                 {link.label}
               </Link>

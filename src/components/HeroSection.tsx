@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ChromeStoreButton } from './ChromeStoreButton';
 import { HeroShowcase } from './HeroShowcase';
 import { MarketingBackdrop } from './MarketingBackdrop';
+import { CursorGlow } from './motion/CursorGlow';
 import { isBillingEnabled, PRO_PRICE } from '@/lib/site';
 
 const TRUST_ITEMS = ['Chrome & Firefox', 'Local-first', 'Vision AI for screenshots'] as const;
@@ -10,6 +11,7 @@ export function HeroSection() {
   return (
     <section className="relative min-h-[min(92vh,52rem)] overflow-hidden">
       <MarketingBackdrop variant="landing" />
+      <CursorGlow />
       <div className="relative z-10 mx-auto max-w-6xl px-6 pb-24 pt-14 md:pb-32 md:pt-20">
         <div className="grid items-center gap-16 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
           <div>
@@ -55,7 +57,7 @@ export function HeroSection() {
                 >
                   <svg
                     aria-hidden="true"
-                    className="h-3.5 w-3.5 text-syntax-text"
+                    className="h-3.5 w-3.5 text-syntax-brand"
                     fill="none"
                     stroke="currentColor"
                     strokeLinecap="round"

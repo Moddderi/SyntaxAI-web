@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { TiltFrame } from '@/components/motion/TiltFrame';
-import { HERO_VIDEO_URL, SHOTS } from '@/lib/site';
+import { HERO_VIDEO_URL } from '@/lib/site';
+import { SHOTS } from '@/lib/shots';
 
 function ChipJs() {
   return (
@@ -76,11 +77,9 @@ export function HeroShowcase() {
                   alt={library.alt}
                   className="h-auto w-full"
                   fetchPriority="high"
-                  height={library.height}
                   loading="eager"
-                  sizes="(min-width: 1024px) 620px, 100vw"
                   src={library.src}
-                  width={library.width}
+                  unoptimized
                 />
               )}
               <span aria-hidden className="feature-shot__scan" />
@@ -95,11 +94,9 @@ export function HeroShowcase() {
             <Image
               alt={sidepanel.alt}
               className="h-auto w-full"
-              height={sidepanel.height}
               loading="eager"
-              sizes="170px"
               src={sidepanel.src}
-              width={sidepanel.width}
+              unoptimized
             />
           </div>
         </div>
