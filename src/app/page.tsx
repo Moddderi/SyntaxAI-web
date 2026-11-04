@@ -1,4 +1,5 @@
 import { BookCallSection } from '@/components/BookCallSection';
+import { ContextCaptureDemo } from '@/components/ContextCaptureDemo';
 import { DashboardShowcase } from '@/components/DashboardShowcase';
 import { FaqSection } from '@/components/FaqSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
@@ -19,6 +20,7 @@ export default function HomePage() {
       <TechMarquee />
       <HowItWorks />
       <LiveDemo />
+      <ContextCaptureDemo />
       <HomeFlowDivider />
       <DashboardShowcase />
       <HomeFlowDivider />
