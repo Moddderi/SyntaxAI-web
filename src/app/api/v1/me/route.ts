@@ -8,6 +8,7 @@ import {
 } from '@/lib/extension-api';
 import { db } from '@/lib/db';
 import { asPlan } from '@/lib/plan';
+import { enforceRateLimit, PROFILE_RATE_LIMITS } from '@/lib/rate-limit';
 import { user } from '@/lib/schema';
 
 export const runtime = 'nodejs';
@@ -42,6 +43,11 @@ export async function PATCH(request: NextRequest) {
   const authUser = await authenticateExtension(request);
   if (!authUser) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('profile', authUser.id, PROFILE_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   let body: unknown;

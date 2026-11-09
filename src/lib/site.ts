@@ -117,9 +117,9 @@ export const FEATURE_GRID = [
     points: ['Stay in the tab', 'Dashboard for deep work'],
   },
   {
-    title: 'Local-first notes',
+    title: 'Local-first, synced to you',
     description:
-      'Your library lives in the browser. Search, star, and reuse without shipping snippets to a random cloud folder.',
-    points: ['Chrome storage', 'You stay in control'],
+      'Notes save instantly on your device, then sync to your private SyntaxAI account — so they survive a reinstall and follow you across browsers.',
+    points: ['Instant local saves', 'Account sync & export'],
   },
 ] as const;

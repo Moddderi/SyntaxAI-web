@@ -6,6 +6,7 @@ import {
 } from '@/lib/extension-api';
 import { listNotesSince, upsertNotesFromClient } from '@/lib/notes';
 import { noteSyncPushSchema } from '@/lib/note-types';
+import { enforceRateLimit, NOTES_RATE_LIMITS } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -18,6 +19,11 @@ export async function GET(request: NextRequest) {
   const user = await authenticateExtension(request);
   if (!user) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('notes-read', user.id, NOTES_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   const sinceParam = request.nextUrl.searchParams.get('since');
@@ -44,6 +50,11 @@ export async function POST(request: NextRequest) {
   const user = await authenticateExtension(request);
   if (!user) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('notes-write', user.id, NOTES_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   let body: unknown;

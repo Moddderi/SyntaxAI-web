@@ -1,7 +1,13 @@
 export type AiLocale = 'en' | 'uk';
 
-const TECH_SLUG_EXAMPLES =
-  'react, redux, zustand, nextjs, vuejs, angular, svelte, django, fastapi, flask, nestjs, prisma, zod, tailwindcss, docker, kubernetes, graphql, nodejs, express, mongodb, postgresql, mysql, typescript, javascript, python, go, rust, bash, csharp, java, kotlin, cplusplus, html, css, sql';
+// Mirrors the extension's tech catalog (src/utils/techCatalog.ts) so AI slugs map to icons.
+const LANGUAGE_SLUGS =
+  'javascript, typescript, python, java, kotlin, swift, csharp, cplusplus, c, go, rust, php, ruby, dart, scala, elixir, haskell, lua, r, perl, bash, powershell, sql, html5, css3, sass, yaml, json, toml, xml, graphql, solidity, objectivec, julia, clojure, fsharp, ocaml, erlang, groovy, matlab, latex, assembly, zig';
+
+const STACK_SLUGS =
+  'react, nextjs, remix, gatsby, reactnative, expo, vuejs, nuxtjs, angular, svelte, solidjs, astro, htmx, alpinejs, jquery, redux, zustand, mobx, tanstack-query, rxjs, zod, trpc, prisma, drizzle, typeorm, sequelize, mongoose, sqlalchemy, tailwindcss, bootstrap, materialui, chakraui, shadcn, styledcomponents, axios, lodash, socketio, threejs, d3js, nodejs, denojs, bun, express, fastify, hono, nestjs, django, djangorest, flask, fastapi, spring, laravel, symfony, wordpress, rails, dotnetcore, unity, flutter, jetpackcompose, android, swiftui, electron, tauri, vitejs, webpack, jest, vitest, playwright, cypressio, pytest, eslint, npm, yarn, pnpm, git, githubactions, docker, kubernetes, helm, terraform, ansible, nginx, amazonwebservices, azure, googlecloud, firebase, supabase, vercel, cloudflare, postgresql, mysql, sqlite, microsoftsqlserver, oracle, mongodb, redis, pandas, numpy, matplotlib, pytorch, tensorflow, scikitlearn, opencv, jupyter, streamlit, huggingface, selenium, openapi';
+
+const TECH_SLUG_EXAMPLES = `Languages: ${LANGUAGE_SLUGS}\nFrameworks, libraries and tools: ${STACK_SLUGS}`;
 
 function outputLanguageRule(locale: AiLocale): string {
   if (locale === 'uk') {
@@ -34,8 +40,11 @@ Separate the stack into three fields:
 
 4. "summary" — 1-2 short sentences explaining what the code does or the task context.
 
-Preferred Devicon slugs (examples): ${TECH_SLUG_EXAMPLES}
-- You MAY return ANY lowercase slug for primaryTech and language.
+Preferred slugs (use these exact spellings when they fit):
+${TECH_SLUG_EXAMPLES}
+- You MAY return ANY lowercase slug for primaryTech and language when nothing above fits.
+- "language" must be one of the Languages above whenever possible (html5 / css3 for markup and styles, sql for queries, yaml for configs).
+- "primaryTech" must be the most SPECIFIC stack: nextjs over react, nestjs over nodejs, tailwindcss over css3, prisma over typescript.
 
 Intent recognition:
 1. Raw code: extract title, primaryTech, language, topics, and code.
@@ -69,7 +78,8 @@ Return STRICTLY JSON without markdown wrappers (no \`\`\`json) with this structu
   "suggestedTitle": "Concise note title",
   "formattedNote": "Full structured note text in Markdown, including rules, bullets, and descriptions",
   "primaryCode": "Main extracted code block (if any)",
-  "language": "programming language (javascript, typescript, python, etc.)",
+  "primaryTech": "most specific framework/library/tool slug for the icon (react, nextjs, docker, postgresql, python when plain script)",
+  "language": "base programming language slug (javascript, typescript, python, go, rust, sql, bash, html5, css3, yaml, etc.)",
   "tags": ["array", "of", "tags", "without-hash"]
 }
 
@@ -77,6 +87,10 @@ Rules:
 1. Do not drop important context (versions, API rules, warnings from the text).
 2. If there are multiple code blocks — merge or put the main one in primaryCode; keep others inside formattedNote.
 3. tags — task context only, not language or framework names.
+   primaryTech and language use these slugs where they fit.
+   Languages: ${LANGUAGE_SLUGS}
+   Frameworks, libraries and tools: ${STACK_SLUGS}
+   Choose the MOST SPECIFIC stack (nextjs over react, tailwindcss over css3). Judge by the code AND the page URL/title (e.g. docs.docker.com => docker).
 4. formattedNote must be ready to save as a developer markdown note.
 5. ${outputLanguage}
 6. Preserve technical terms and API names from the source; translate explanatory prose only.`;

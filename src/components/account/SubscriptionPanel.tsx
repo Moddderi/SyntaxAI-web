@@ -54,7 +54,7 @@ export function SubscriptionPanel({ isPro }: { isPro: boolean }) {
         <ul className="mt-5 space-y-2.5">
           <Benefit>Smart titles, tags & stack detection</Benefit>
           <Benefit>Side panel + searchable library</Benefit>
-          <Benefit>Local-first notes in Chrome</Benefit>
+          <Benefit>Local-first notes with account sync</Benefit>
           {isPro ? (
             <>
               <Benefit>Unlimited saved notes</Benefit>

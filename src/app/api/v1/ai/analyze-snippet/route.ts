@@ -5,6 +5,7 @@ import {
   extensionOptions,
 } from '@/lib/extension-api';
 import { buildSnippetAnalyzerSystemPrompt } from '@/lib/ai-prompts';
+import { AI_RATE_LIMITS, enforceRateLimit } from '@/lib/rate-limit';
 import { analyzeSnippetRequestSchema, rawSnippetResultSchema } from '@/lib/ai-types';
 import {
   createJsonChatCompletion,
@@ -45,6 +46,11 @@ export async function POST(request: NextRequest) {
   const user = await authenticateExtension(request);
   if (!user) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('ai', user.id, AI_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   let body: unknown;

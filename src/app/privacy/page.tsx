@@ -1,10 +1,26 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { SUPPORT_EMAIL } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'SyntaxAI privacy policy — how we handle your data.',
+  description: 'SyntaxAI privacy policy — what we collect, why, and who processes it.',
 };
+
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
+        {title}
+      </h2>
+      <div className="mt-4 space-y-4 leading-relaxed">{children}</div>
+    </section>
+  );
+}
+
+function Strong({ children }: { children: ReactNode }) {
+  return <strong className="font-medium text-syntax-text">{children}</strong>;
+}
 
 export default function PrivacyPage() {
   return (
@@ -16,77 +32,159 @@ export default function PrivacyPage() {
         Privacy Policy
       </h1>
       <div className="section-neon-line" aria-hidden="true" />
-      <p className="mt-6 text-syntax-muted">Last updated: October 2026</p>
+      <p className="mt-6 text-syntax-muted">Last updated: November 2026</p>
 
       <div className="mt-12 max-w-none space-y-10 text-syntax-muted">
-        <section>
-          <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
-            Overview
-          </h2>
-          <p className="mt-4 leading-relaxed">
-            SyntaxAI is a Chrome extension that helps developers capture and organize code
-            snippets and page context. Your notes library is stored locally in your browser
-            using Chrome storage APIs unless you explicitly export or sync data (future
-            feature).
+        <Section title="Overview">
+          <p>
+            SyntaxAI is a browser extension (Chrome and Firefox) and website that helps
+            developers capture code, documentation and screenshots into a searchable notebook.
+            Notes are saved on your device first and, once you sign in, synced to your SyntaxAI
+            account so they survive a reinstall and appear in every browser you sign in to.
           </p>
-        </section>
+          <p>
+            This policy explains what we collect, why, which providers process it, and how to
+            delete it.
+          </p>
+        </Section>
 
-        <section>
-          <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
-            Data we collect
-          </h2>
-          <ul className="mt-4 list-disc space-y-3 pl-5 leading-relaxed">
+        <Section title="Data we collect">
+          <ul className="list-disc space-y-3 pl-5">
             <li>
-              <strong className="font-medium text-syntax-text">Notes you create</strong> —
-              stored locally on your device by default.
+              <Strong>Account data</Strong> — name, email address and profile image from Google
+              or GitHub when you sign in, plus your plan status and a device token that lets
+              the extension talk to your account. Device tokens are stored hashed.
             </li>
             <li>
-              <strong className="font-medium text-syntax-text">AI analysis requests</strong> —
-              when you analyze code or images, content is sent to OpenAI to generate titles,
-              tags, and summaries. We do not use your content to train models (per OpenAI API
-              terms).
+              <Strong>Your notes</Strong> — title, body, code, tags, detected tech stack, and
+              the URL of the page you captured from. Stored locally in your browser and, when
+              signed in, on our servers.
             </li>
             <li>
-              <strong className="font-medium text-syntax-text">Account data</strong> — if you
-              sign in with Google, we store your name, email, and subscription status so we can
-              unlock Pro. Notes stay in Chrome unless you later turn on sync.
+              <Strong>Content you send to AI</Strong> — when you analyze pasted code, a
+              screenshot, or a page selection, that content (including the page URL, title and
+              meta description for page captures) is sent to our server and forwarded to
+              OpenAI to generate a title, tags and a summary. We do not store AI request
+              contents beyond processing them; the resulting note is stored only if you save
+              it.
+            </li>
+            <li>
+              <Strong>Feedback and bug reports</Strong> — what you type in the form, plus the
+              email and name on your account, delivered to our support inbox by email.
+            </li>
+            <li>
+              <Strong>Technical data</Strong> — standard server logs (IP address, user agent,
+              timestamps) kept by our hosting providers for security and reliability.
             </li>
           </ul>
-        </section>
+        </Section>
 
-        <section>
-          <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
-            What we do not do
-          </h2>
-          <ul className="mt-4 list-disc space-y-3 pl-5 leading-relaxed">
-            <li>We do not sell your personal data.</li>
-            <li>We do not read your browsing history beyond pages you explicitly capture.</li>
-            <li>We do not access pages without your action (hotkey, context menu, or paste).</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
-            Third-party services
-          </h2>
-          <p className="mt-4 leading-relaxed">
-            SyntaxAI uses OpenAI for AI analysis and Polar.sh as merchant of record for Pro
-            payments. These services have their own privacy policies.
+        <Section title="How we use it">
+          <p>
+            Only to run the product: sign you in, sync your notes, generate AI notes you ask
+            for, answer support requests and keep the service secure and within fair-use
+            limits. We do not sell your data, show ads, or build advertising profiles. We do
+            not use your content to train models.
           </p>
-        </section>
+          <p>
+            The use of information received from browser extension APIs adheres to the
+            Chrome Web Store User Data Policy, including the Limited Use requirements, and to
+            Mozilla&apos;s add-on policies.
+          </p>
+        </Section>
 
-        <section>
-          <h2 className="font-mono text-lg font-bold uppercase tracking-[0.06em] text-syntax-text">
-            Contact
-          </h2>
-          <p className="mt-4 leading-relaxed">
+        <Section title="Extension permissions">
+          <ul className="list-disc space-y-3 pl-5">
+            <li>
+              <Strong>storage</Strong> — save notes, settings and your sign-in token on your
+              device.
+            </li>
+            <li>
+              <Strong>activeTab and scripting</Strong> — when you press the capture shortcut or
+              use &quot;Add to SyntaxAI&quot;, read the text you selected on the current tab.
+              Nothing is read from a page until you trigger a capture.
+            </li>
+            <li>
+              <Strong>contextMenus and commands</Strong> — the right-click &quot;Add to
+              SyntaxAI&quot; item and the capture shortcut.
+            </li>
+            <li>
+              <Strong>sidePanel / sidebar</Strong> — show the capture panel next to the page.
+            </li>
+            <li>
+              <Strong>alarms</Strong> — run background note sync on a timer.
+            </li>
+            <li>
+              <Strong>Access to syntaxai.app and api.syntaxai.app</Strong> — sign in and talk
+              to our API. The extension does not request access to other websites.
+            </li>
+          </ul>
+          <p>
+            The extension and dashboard load technology icons from the jsDelivr CDN, which
+            can see your IP address when icons are fetched.
+          </p>
+        </Section>
+
+        <Section title="What we do not do">
+          <ul className="list-disc space-y-3 pl-5">
+            <li>We do not sell or rent your personal data.</li>
+            <li>We do not read your browsing history or monitor the pages you visit.</li>
+            <li>We do not read page content unless you trigger a capture.</li>
+            <li>We do not run third-party analytics or advertising trackers in the extension.</li>
+          </ul>
+        </Section>
+
+        <Section title="Service providers">
+          <p>These providers process data on our behalf, under their own privacy terms:</p>
+          <ul className="list-disc space-y-3 pl-5">
+            <li>OpenAI — AI analysis of content you submit.</li>
+            <li>Vercel and Railway — website and API hosting.</li>
+            <li>Neon — database that stores accounts and synced notes.</li>
+            <li>Cloudflare — DNS and network delivery.</li>
+            <li>Resend — email delivery of feedback and bug reports.</li>
+            <li>Google and GitHub — sign-in (OAuth).</li>
+            <li>Polar.sh — payments, only when paid plans are enabled.</li>
+          </ul>
+        </Section>
+
+        <Section title="Retention and deletion">
+          <p>
+            Notes you delete move to the trash and are marked deleted on your account. To
+            remove your account and all synced data, email{' '}
+            <a
+              className="text-syntax-text underline-offset-4 hover:underline"
+              href={`mailto:${SUPPORT_EMAIL}`}
+            >
+              {SUPPORT_EMAIL}
+            </a>{' '}
+            from your account address and we will delete it. Uninstalling the extension
+            removes local data from that browser.
+          </p>
+        </Section>
+
+        <Section title="Children">
+          <p>SyntaxAI is not directed to children under 16 and we do not knowingly collect their data.</p>
+        </Section>
+
+        <Section title="Changes">
+          <p>
+            We will update the date above when this policy changes and, for material changes,
+            tell signed-in users in the product or by email.
+          </p>
+        </Section>
+
+        <Section title="Contact">
+          <p>
             Questions about this policy? Email{' '}
-            <a className="text-syntax-text underline-offset-4 hover:underline" href={`mailto:${SUPPORT_EMAIL}`}>
+            <a
+              className="text-syntax-text underline-offset-4 hover:underline"
+              href={`mailto:${SUPPORT_EMAIL}`}
+            >
               {SUPPORT_EMAIL}
             </a>
             .
           </p>
-        </section>
+        </Section>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   extensionJson,
   extensionOptions,
 } from '@/lib/extension-api';
+import { enforceRateLimit, FEEDBACK_RATE_LIMITS } from '@/lib/rate-limit';
 import {
   feedbackRequestSchema,
   sendFeedbackEmail,
@@ -20,6 +21,11 @@ export async function POST(request: NextRequest) {
   const user = await authenticateExtension(request);
   if (!user) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('feedback', user.id, FEEDBACK_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   let body: unknown;

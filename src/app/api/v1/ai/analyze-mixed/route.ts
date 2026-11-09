@@ -15,6 +15,7 @@ import {
   type AnalyzeMixedRequest,
 } from '@/lib/ai-types';
 import { createJsonChatCompletion, OpenAiProxyError } from '@/lib/openai';
+import { AI_RATE_LIMITS, enforceRateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -56,12 +57,14 @@ function normalizeMixedRaw(raw: {
   primaryCode?: string;
   code?: string;
   language?: string;
+  primaryTech?: string;
   tags?: string[];
 }): {
   suggestedTitle: string;
   formattedNote: string;
   primaryCode: string;
   language: string;
+  primaryTech?: string;
   tags: string[];
 } | null {
   const suggestedTitle = raw.suggestedTitle ?? raw.title ?? null;
@@ -78,7 +81,9 @@ function normalizeMixedRaw(raw: {
     suggestedTitle: suggestedTitle ?? '',
     formattedNote: formattedNote ?? '',
     primaryCode,
-    language: raw.language ?? 'typescript',
+    // The extension re-detects from the text; 'javascript' is only the last-resort default.
+    language: raw.language?.trim().toLowerCase() || 'javascript',
+    ...(raw.primaryTech?.trim() ? { primaryTech: raw.primaryTech.trim().toLowerCase() } : {}),
     tags: (raw.tags ?? []).filter((tag): tag is string => typeof tag === 'string'),
   };
 }
@@ -87,6 +92,11 @@ export async function POST(request: NextRequest) {
   const user = await authenticateExtension(request);
   if (!user) {
     return extensionJson({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('ai', user.id, AI_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   let body: unknown;

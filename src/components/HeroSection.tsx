@@ -5,7 +5,7 @@ import { MarketingBackdrop } from './MarketingBackdrop';
 import { CursorGlow } from './motion/CursorGlow';
 import { isBillingEnabled, PRO_PRICE } from '@/lib/site';
 
-const TRUST_ITEMS = ['Chrome & Firefox', 'Local-first', 'Vision AI for screenshots'] as const;
+const TRUST_ITEMS = ['Chrome & Firefox', 'Local-first + sync', 'Vision AI for screenshots'] as const;
 
 export function HeroSection() {
   return (

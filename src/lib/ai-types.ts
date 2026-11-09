@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 export const aiLocaleSchema = z.enum(['en', 'uk']);
 
+/** Combined cap for all base64 images in one request (~9 MB of image data). */
+const MAX_TOTAL_IMAGE_CHARS = 12_000_000;
+
 export const analyzeSnippetRequestSchema = z
   .object({
     locale: aiLocaleSchema.default('en'),
@@ -16,6 +19,15 @@ export const analyzeSnippetRequestSchema = z
         code: 'custom',
         message: 'Provide promptOrCode and/or imagesBase64',
         path: ['promptOrCode'],
+      });
+    }
+
+    const totalImageChars = (value.imagesBase64 ?? []).reduce((sum, image) => sum + image.length, 0);
+    if (totalImageChars > MAX_TOTAL_IMAGE_CHARS) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Images are too large. Use smaller screenshots.',
+        path: ['imagesBase64'],
       });
     }
   });
@@ -72,6 +84,7 @@ export const rawMixedResultSchema = z.object({
   primaryCode: z.string().optional(),
   code: z.string().optional(),
   language: z.string().optional(),
+  primaryTech: z.string().optional(),
   tags: z.array(z.string()).optional(),
 });
 

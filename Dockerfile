@@ -23,6 +23,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+# Railway bills by RAM-minutes: keep the V8 heap small so the idle API stays cheap.
+ENV NODE_OPTIONS=--max-old-space-size=256
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends openssl ca-certificates \
   && rm -rf /var/lib/apt/lists/* \
