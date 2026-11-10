@@ -14,7 +14,7 @@ export const API_PUBLIC_URL = (
 
 export const CHROME_STORE_URL =
   process.env.NEXT_PUBLIC_CHROME_STORE_URL ??
-  'https://chromewebstore.google.com/detail/syntaxai';
+  'https://chromewebstore.google.com/detail/syntaxai/fbkbpcidobeacdbhhinjgbdecnnadejm';
 
 export const BROWSER_ICON_CHROME = '/free-icon-chrome-6125000.png';
 export const BROWSER_ICON_FIREFOX = '/free-icon-firefox-5968827.png';
