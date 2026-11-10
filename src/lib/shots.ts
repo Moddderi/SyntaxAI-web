@@ -11,7 +11,7 @@ import stack from '@/assets/shots/stack.png';
 export const SHOTS = {
   library: {
     src: library,
-    alt: 'SyntaxAI dashboard: all notes as a list with technology icons, AI titles and summaries',
+    alt: 'SyntaxAI dashboard: all notes as cards with technology icons, AI titles, summaries and code previews',
   },
   stack: {
     src: stack,
