@@ -12,16 +12,14 @@ export const API_PUBLIC_URL = (
   SITE_URL
 ).replace(/\/$/, '');
 
+/** Public, stable listing URLs. Deliberately not env-driven: a stale NEXT_PUBLIC_* value in the host dashboard would silently break the install buttons. */
 export const CHROME_STORE_URL =
-  process.env.NEXT_PUBLIC_CHROME_STORE_URL ??
   'https://chromewebstore.google.com/detail/syntaxai/fbkbpcidobeacdbhhinjgbdecnnadejm';
 
 export const BROWSER_ICON_CHROME = '/free-icon-chrome-6125000.png';
 export const BROWSER_ICON_FIREFOX = '/free-icon-firefox-5968827.png';
 
-export const FIREFOX_ADDON_URL =
-  process.env.NEXT_PUBLIC_FIREFOX_ADDON_URL ??
-  'https://addons.mozilla.org/en-US/firefox/addon/syntaxai/';
+export const FIREFOX_ADDON_URL = 'https://addons.mozilla.org/en-US/firefox/addon/syntaxai/';
 
 export const BOOK_CALL_URL =
   process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
