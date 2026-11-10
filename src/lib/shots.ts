@@ -11,11 +11,11 @@ import stack from '@/assets/shots/stack.png';
 export const SHOTS = {
   library: {
     src: library,
-    alt: 'SyntaxAI dashboard: all notes with stack icons, titles and code previews',
+    alt: 'SyntaxAI dashboard: all notes as a list with technology icons, AI titles and summaries',
   },
   stack: {
     src: stack,
-    alt: 'SyntaxAI stack view: notes grouped by JavaScript, React and Angular',
+    alt: 'SyntaxAI stack view: notes grouped by Kotlin, React, C#, Java, Angular and JavaScript',
   },
   insights: {
     src: insights,
@@ -23,6 +23,6 @@ export const SHOTS = {
   },
   sidepanel: {
     src: sidepanel,
-    alt: 'SyntaxAI side panel: paste code or drop an image, then save to library',
+    alt: 'SyntaxAI side panel: paste code or drop an image, then save to library; search tab filters notes by technology',
   },
 } as const;
