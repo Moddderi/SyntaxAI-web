@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { TECHS } from '@/lib/techIcons';
 
 export const alt = 'SyntaxAI — AI developer notebook for Chrome';
 export const size = { width: 1200, height: 630 };
@@ -16,9 +17,9 @@ function LogoMark({ size: s }: { size: number }) {
 }
 
 const notes = [
-  { lang: 'TypeScript', title: 'Debounce hook with cleanup', tone: '#60a5fa' },
-  { lang: 'React', title: 'useOptimistic form pattern', tone: '#22d3ee' },
-  { lang: 'SQL', title: 'Window functions cheat sheet', tone: '#c4b5fd' },
+  { tech: { ...TECHS.typescript, color: '#4c9aff' }, title: 'Debounce hook' },
+  { tech: TECHS.react, title: 'Optimistic form' },
+  { tech: { ...TECHS.postgres, color: '#6f9bff' }, title: 'Window functions' },
 ];
 
 export default function OpenGraphImage() {
@@ -91,7 +92,7 @@ export default function OpenGraphImage() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              width: 620,
+              width: 590,
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -189,33 +190,26 @@ export default function OpenGraphImage() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: 420,
-                padding: 22,
-                borderRadius: 26,
-                background: 'rgba(14,14,20,0.92)',
-                border: '1.5px solid rgba(255,255,255,0.16)',
-                boxShadow: '0 30px 80px rgba(139,92,246,0.35)',
+                width: 440,
+                padding: 24,
+                borderRadius: 28,
+                background: '#0d0d12',
+                border: '2px solid rgba(255,255,255,0.22)',
+                boxShadow: '0 30px 90px rgba(139,92,246,0.4)',
               }}
             >
-              {/* window dots + search */}
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 18 }}>
-                <div style={{ display: 'flex', width: 12, height: 12, borderRadius: 99, background: '#3f3f46', marginRight: 8 }} />
-                <div style={{ display: 'flex', width: 12, height: 12, borderRadius: 99, background: '#3f3f46', marginRight: 8 }} />
-                <div style={{ display: 'flex', width: 12, height: 12, borderRadius: 99, background: '#3f3f46' }} />
-                <div
-                  style={{
-                    display: 'flex',
-                    flex: 1,
-                    marginLeft: 18,
-                    padding: '8px 16px',
-                    borderRadius: 12,
-                    background: 'rgba(255,255,255,0.06)',
-                    fontSize: 18,
-                    color: '#8a8a95',
-                  }}
-                >
-                  Search your library…
-                </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '12px 18px',
+                  borderRadius: 14,
+                  background: 'rgba(255,255,255,0.09)',
+                  fontSize: 22,
+                  color: '#b4b4bf',
+                }}
+              >
+                Search your library…
               </div>
 
               {notes.map((n) => (
@@ -223,33 +217,46 @@ export default function OpenGraphImage() {
                   key={n.title}
                   style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    marginTop: 10,
+                    alignItems: 'center',
+                    marginTop: 14,
                     padding: '16px 18px',
-                    borderRadius: 16,
-                    background: 'rgba(255,255,255,0.045)',
-                    border: '1.5px solid rgba(255,255,255,0.08)',
+                    borderRadius: 18,
+                    background: 'rgba(255,255,255,0.07)',
+                    border: '2px solid rgba(255,255,255,0.12)',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: 64,
+                      height: 64,
+                      borderRadius: 16,
+                      background: '#000000',
+                      border: `2px solid ${n.tech.color}`,
+                    }}
+                  >
+                    <svg width={38} height={38} viewBox="0 0 24 24" fill={n.tech.color}>
+                      <path d={n.tech.path} />
+                    </svg>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 18, flex: 1 }}>
+                    <div style={{ display: 'flex', fontSize: 30, fontWeight: 700, lineHeight: 1.15 }}>
+                      {n.title}
+                    </div>
                     <div
                       style={{
                         display: 'flex',
-                        padding: '3px 12px',
-                        borderRadius: 999,
-                        fontSize: 15,
-                        fontWeight: 700,
-                        color: n.tone,
-                        border: `1.5px solid ${n.tone}`,
+                        marginTop: 6,
+                        fontSize: 20,
+                        fontWeight: 600,
+                        color: n.tech.color,
                       }}
                     >
-                      {n.lang}
-                    </div>
-                    <div style={{ display: 'flex', marginLeft: 10, fontSize: 15, color: '#6b6b76' }}>
-                      auto-tagged
+                      {n.tech.name}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', marginTop: 10, fontSize: 22, fontWeight: 600 }}>{n.title}</div>
                 </div>
               ))}
             </div>
