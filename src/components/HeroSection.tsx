@@ -36,7 +36,7 @@ export function HeroSection() {
               </ChromeStoreButton>
               <Link
                 className="btn-secondary inline-flex h-12 items-center gap-2 rounded-full px-8 text-sm font-medium"
-                href="#demo"
+                href="#how-it-works"
               >
                 See it in action
                 <span aria-hidden="true">↓</span>

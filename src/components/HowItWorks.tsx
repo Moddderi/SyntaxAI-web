@@ -21,7 +21,7 @@ const ICONS = [
 
 export function HowItWorks() {
   return (
-    <section className="relative px-6 py-16 md:py-24" id="how-it-works">
+    <section className="relative scroll-mt-20 px-6 py-16 md:py-24" id="how-it-works">
       <div className="mx-auto max-w-6xl">
         <Reveal className="mb-14" variant="blur-up">
           <SectionHead
