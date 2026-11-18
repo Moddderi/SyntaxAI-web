@@ -1,14 +1,52 @@
 import Link from 'next/link';
 import { BrowserInstallButtons } from '@/components/BrowserInstallButtons';
 import { Logo } from '@/components/Logo';
+import { ShareMarkdown } from '@/components/share/ShareMarkdown';
 import type { NoteShareSnapshot } from '@/lib/note-share-types';
 import { resolveShareTech } from '@/lib/resolveShareTech';
 import { TechIcon } from '@/lib/techIcons';
 
-function TechPill({ slug, label }: { slug: string; label: string }) {
+const FENCED_CODE_RE = /```[\w-]*\n[\s\S]*?```/;
+
+function formatTopicLabel(slug: string): string {
   const tech = resolveShareTech(slug);
+  if (tech) {
+    return tech.name;
+  }
+
+  return slug.replace(/^#+/, '').replace(/[-_]+/g, ' ').trim();
+}
+
+function formatSourceLabel(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function stripMatchingTitle(markdown: string, title: string): string {
+  const trimmedTitle = title.trim();
+  if (!trimmedTitle) {
+    return markdown.trim();
+  }
+
+  return markdown
+    .replace(new RegExp(`^#\\s+${escapeRegExp(trimmedTitle)}\\s*\\n+`, 'i'), '')
+    .trim();
+}
+
+function TechPill({ slug }: { slug: string }) {
+  const tech = resolveShareTech(slug);
+  const label = formatTopicLabel(slug);
+
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-syntax-border bg-syntax-card px-3 py-1.5 text-xs text-syntax-text">
+    <span className="inline-flex items-center gap-2 rounded-full border border-syntax-border bg-syntax-bg px-3 py-1.5 text-xs text-syntax-text">
       {tech ? <TechIcon className="h-4 w-4" tech={tech} /> : null}
       {label}
     </span>
@@ -26,7 +64,13 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
     dateStyle: 'medium',
     timeStyle: 'short',
   });
-
+  const primaryTech = resolveShareTech(snapshot.primaryTech) ?? resolveShareTech(snapshot.language);
+  const bodyMarkdown = snapshot.body ? stripMatchingTitle(snapshot.body, snapshot.title) : '';
+  const summaryMarkdown = snapshot.summary?.trim() ?? '';
+  const bodyHasCode = FENCED_CODE_RE.test(bodyMarkdown);
+  const showStandaloneCode = snapshot.code.trim().length > 0 && !bodyHasCode;
+  const showSummary = summaryMarkdown.length > 0;
+  const showBody = bodyMarkdown.length > 0;
   const stackSlugs = [
     snapshot.primaryTech,
     snapshot.language,
@@ -49,53 +93,68 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
 
       <article className="overflow-hidden rounded-3xl border border-syntax-border bg-syntax-card">
         <div className="border-b border-syntax-border px-6 py-6 md:px-8">
-          <h1 className="font-mono text-2xl font-bold uppercase tracking-[0.04em] text-syntax-text md:text-3xl">
-            {snapshot.title}
-          </h1>
-          {sharerName ? (
-            <p className="mt-2 text-sm text-syntax-muted">Shared by {sharerName}</p>
-          ) : null}
-          {snapshot.sourceUrl ? (
-            <p className="mt-3 truncate text-xs text-syntax-muted">
-              Source:{' '}
-              <a
-                className="text-syntax-text underline-offset-4 hover:underline"
-                href={snapshot.sourceUrl}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {snapshot.sourceUrl}
-              </a>
-            </p>
-          ) : null}
+          <div className="flex items-start gap-4">
+            {primaryTech ? (
+              <div className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-syntax-border bg-syntax-bg">
+                <TechIcon className="h-6 w-6" tech={primaryTech} />
+              </div>
+            ) : null}
+            <div className="min-w-0 flex-1">
+              <h1 className="text-2xl font-semibold leading-snug text-syntax-text md:text-[1.75rem]">
+                {snapshot.title}
+              </h1>
+              {sharerName ? (
+                <p className="mt-2 text-sm text-syntax-muted">Shared by {sharerName}</p>
+              ) : null}
+              {snapshot.sourceUrl ? (
+                <p className="mt-3 truncate text-xs text-syntax-muted">
+                  Source:{' '}
+                  <a
+                    className="text-syntax-text underline-offset-4 hover:underline"
+                    href={snapshot.sourceUrl}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {formatSourceLabel(snapshot.sourceUrl)}
+                  </a>
+                </p>
+              ) : null}
+            </div>
+          </div>
           <div className="mt-5 flex flex-wrap gap-2">
             {stackSlugs.map((slug) => (
-              <TechPill key={slug} label={slug} slug={slug} />
+              <TechPill key={slug} slug={slug} />
             ))}
           </div>
         </div>
 
-        {snapshot.summary?.trim() ? (
-          <section className="border-b border-syntax-border px-6 py-6 md:px-8">
-            <h2 className="syntax-label mb-3 text-syntax-muted">Summary</h2>
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-syntax-text">
-              {snapshot.summary.trim()}
-            </p>
+        {showSummary ? (
+          <section
+            className={`px-6 py-6 md:px-8 ${showBody || showStandaloneCode ? 'border-b border-syntax-border' : ''}`}
+          >
+            <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
+              Summary
+            </h2>
+            <ShareMarkdown content={summaryMarkdown} />
           </section>
         ) : null}
 
-        {snapshot.body?.trim() ? (
-          <section className="border-b border-syntax-border px-6 py-6 md:px-8">
-            <h2 className="syntax-label mb-3 text-syntax-muted">Context</h2>
-            <div className="whitespace-pre-wrap text-sm leading-relaxed text-syntax-muted">
-              {snapshot.body.trim()}
-            </div>
+        {showBody ? (
+          <section
+            className={`px-6 py-6 md:px-8 ${showStandaloneCode ? 'border-b border-syntax-border' : ''}`}
+          >
+            <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
+              Context
+            </h2>
+            <ShareMarkdown content={bodyMarkdown} />
           </section>
         ) : null}
 
-        {snapshot.code.trim() ? (
+        {showStandaloneCode ? (
           <section className="px-6 py-6 md:px-8">
-            <h2 className="syntax-label mb-3 text-syntax-muted">Code</h2>
+            <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
+              Code
+            </h2>
             <pre className="max-h-[28rem] overflow-auto rounded-2xl border border-syntax-border bg-syntax-bg p-4 font-mono text-[13px] leading-relaxed text-syntax-text">
               <code>{snapshot.code}</code>
             </pre>
