@@ -32,10 +32,16 @@ export async function DELETE(
     return extensionJson({ error: 'Invalid slug' }, 400);
   }
 
-  const revoked = await revokeNoteShare(user.id, slug);
-  if (!revoked) {
-    return extensionJson({ error: 'Share not found' }, 404);
-  }
+  try {
+    const revoked = await revokeNoteShare(user.id, slug);
+    if (!revoked) {
+      return extensionJson({ error: 'Share not found' }, 404);
+    }
 
-  return extensionJson({ ok: true });
+    return extensionJson({ ok: true });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown';
+    console.error('[notes/share/revoke]', message);
+    return extensionJson({ error: 'Could not stop sharing. Try again in a moment.' }, 500);
+  }
 }

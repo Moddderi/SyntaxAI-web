@@ -38,12 +38,21 @@ export async function POST(request: NextRequest) {
   }
 
   const { noteId, snapshot } = parsed.data;
-  const result = await upsertNoteShare(user.id, noteId, snapshot);
 
-  return extensionJson({
-    ok: true,
-    slug: result.slug,
-    url: result.url,
-    expiresAt: result.expiresAt,
-  });
+  try {
+    const result = await upsertNoteShare(user.id, noteId, snapshot);
+    return extensionJson({
+      ok: true,
+      slug: result.slug,
+      url: result.url,
+      expiresAt: result.expiresAt,
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown';
+    console.error('[notes/share]', message);
+    return extensionJson(
+      { error: 'Could not create share link. Try again in a moment.' },
+      500,
+    );
+  }
 }

@@ -39,7 +39,13 @@ export async function upsertNoteShare(
 ): Promise<{ slug: string; url: string; expiresAt: string }> {
   const now = new Date();
   const expiresAt = new Date(now.getTime() + NOTE_SHARE_TTL_MS);
-  const referralCode = await ensureReferralCode(userId);
+  let referralCode: string | null = null;
+  try {
+    referralCode = await ensureReferralCode(userId);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'unknown';
+    console.error('[notes/share] referral code', message);
+  }
 
   const [existing] = await db
     .select({
