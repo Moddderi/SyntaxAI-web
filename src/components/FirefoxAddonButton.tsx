@@ -17,7 +17,7 @@ const SIZE_CLASS = {
 
 const VARIANT_CLASS = {
   primary: 'btn-primary rounded-full',
-  secondary: 'btn-secondary rounded-full font-medium normal-case tracking-normal font-sans',
+  secondary: 'btn-secondary rounded-full',
   inverse:
     'rounded-full border border-syntax-border bg-syntax-accent-fg font-mono text-xs font-bold uppercase tracking-[0.12em] text-syntax-accent hover:bg-black',
 } as const;

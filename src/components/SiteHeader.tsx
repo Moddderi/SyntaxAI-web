@@ -5,9 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
-import { ChromeStoreButton } from './ChromeStoreButton';
-import { FirefoxAddonButton } from './FirefoxAddonButton';
 import { BrowserInstallButtons } from './BrowserInstallButtons';
+import { HeaderInstallButtons } from './HeaderInstallButtons';
 import { isBillingEnabled } from '@/lib/site';
 
 const NAV_LINKS = [
@@ -69,14 +68,11 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div className="hidden md:block">
             <AuthNav />
           </div>
-          <div className="hidden items-center gap-2 sm:flex">
-            <ChromeStoreButton size="sm">Chrome</ChromeStoreButton>
-            <FirefoxAddonButton size="sm">Firefox</FirefoxAddonButton>
-          </div>
+          <HeaderInstallButtons />
 
           <button
             aria-controls="mobile-nav"
