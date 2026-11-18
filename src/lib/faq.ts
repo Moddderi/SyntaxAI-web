@@ -9,7 +9,7 @@ const CORE_FAQ = [
   {
     question: 'Which browsers are supported?',
     answer:
-      'SyntaxAI is built for Chromium browsers today (Chrome, Brave, Edge, Arc). Firefox support is on the roadmap — you can join the waitlist from the homepage.',
+      'SyntaxAI is available for Chrome and Firefox from the homepage install buttons. Chromium-based browsers (Brave, Edge, Arc) can use the Chrome Web Store build.',
   },
   {
     question: 'Where is my library stored?',

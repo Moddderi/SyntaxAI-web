@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
 import { ChromeStoreButton } from './ChromeStoreButton';
+import { FirefoxAddonButton } from './FirefoxAddonButton';
+import { BrowserInstallButtons } from './BrowserInstallButtons';
 import { isBillingEnabled } from '@/lib/site';
 
 const NAV_LINKS = [
@@ -71,7 +73,10 @@ export function SiteHeader() {
           <div className="hidden md:block">
             <AuthNav />
           </div>
-          <ChromeStoreButton size="sm" />
+          <div className="hidden items-center gap-2 sm:flex">
+            <ChromeStoreButton size="sm">Chrome</ChromeStoreButton>
+            <FirefoxAddonButton size="sm">Firefox</FirefoxAddonButton>
+          </div>
 
           <button
             aria-controls="mobile-nav"
@@ -116,6 +121,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <AuthNav compact />
+            <BrowserInstallButtons className="pt-2" layout="stack" />
           </div>
         </nav>
       ) : null}

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChromeStoreButton } from './ChromeStoreButton';
+import { BrowserInstallButtons } from './BrowserInstallButtons';
 import { HeroShowcase } from './HeroShowcase';
 import { MarketingBackdrop } from './MarketingBackdrop';
 import { CursorGlow } from './motion/CursorGlow';
@@ -30,10 +30,8 @@ export function HeroSection() {
               yours.
             </p>
 
-            <div className="hero-enter hero-enter-4 mt-10 flex flex-wrap items-center gap-3">
-              <ChromeStoreButton className="cta-pulse" showArrow size="lg">
-                Add to Chrome
-              </ChromeStoreButton>
+            <div className="hero-enter hero-enter-4 mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <BrowserInstallButtons chromeClassName="cta-pulse" layout="row" />
               <Link
                 className="btn-secondary inline-flex h-12 items-center gap-2 rounded-full px-8 text-sm font-medium"
                 href="#how-it-works"

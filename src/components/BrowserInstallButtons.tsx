@@ -7,11 +7,13 @@ import {
 } from '@/lib/site';
 
 interface BrowserInstallButtonsProps {
+  chromeClassName?: string;
   className?: string;
   layout?: 'row' | 'stack';
 }
 
 export function BrowserInstallButtons({
+  chromeClassName = '',
   className = '',
   layout = 'row',
 }: BrowserInstallButtonsProps) {
@@ -21,7 +23,7 @@ export function BrowserInstallButtons({
   return (
     <div className={`${layoutClass} ${className}`}>
       <a
-        className="browser-install-btn browser-install-btn--chrome btn-primary inline-flex h-12 flex-1 items-center justify-center gap-2.5 rounded-full px-6 font-mono text-[11px] font-bold uppercase tracking-[0.1em] sm:min-w-[14rem]"
+        className={`browser-install-btn browser-install-btn--chrome btn-primary inline-flex h-12 flex-1 items-center justify-center gap-2.5 rounded-full px-6 font-mono text-[11px] font-bold uppercase tracking-[0.1em] sm:min-w-[14rem] ${chromeClassName}`}
         href={CHROME_STORE_URL}
         rel="noopener noreferrer"
         target="_blank"
