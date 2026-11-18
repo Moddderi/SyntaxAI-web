@@ -113,3 +113,8 @@ export const FEEDBACK_RATE_LIMITS: readonly RateLimitRule[] = [
 export const NOTES_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 120, windowMs: 60_000 }];
 
 export const PROFILE_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 10, windowMs: 60_000 }];
+
+export const SHARE_RATE_LIMITS: readonly RateLimitRule[] = [
+  { limit: 30, windowMs: 24 * 60 * 60_000 },
+  { limit: 10, windowMs: 60_000 },
+];

@@ -69,6 +69,11 @@ export default function PrivacyPage() {
               it.
             </li>
             <li>
+              <Strong>Voluntary public shares</Strong> — if you choose Share on a note, we store
+              a full copy (title, summary, body, code, stack) at a public link for 7 days. Anyone
+              with the link can read it. You can stop sharing before it expires.
+            </li>
+            <li>
               <Strong>Feedback and bug reports</Strong> — what you type in the form, plus the
               email and name on your account, delivered to our support inbox by email.
             </li>

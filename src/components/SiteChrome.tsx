@@ -10,11 +10,15 @@ function isAuthFullscreenPath(pathname: string) {
   return pathname === '/auth/signin' || pathname === '/auth/complete';
 }
 
+function isSharePath(pathname: string) {
+  return pathname.startsWith('/s/');
+}
+
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const authFullscreen = isAuthFullscreenPath(pathname);
 
-  if (authFullscreen) {
+  if (authFullscreen || isSharePath(pathname)) {
     return (
       <MotionRoot>
         <div className="min-h-dvh bg-syntax-bg">{children}</div>

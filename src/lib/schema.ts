@@ -1,4 +1,5 @@
-import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, index, jsonb, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import type { NoteShareSnapshot } from './note-share-types';
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -89,5 +90,25 @@ export const note = pgTable(
   },
   (table) => ({
     userUpdatedIdx: index('note_user_updated_idx').on(table.userId, table.updatedAt),
+  }),
+);
+
+/** Public read-only snapshot of a note — 7-day link for viral sharing */
+export const noteShare = pgTable(
+  'note_share',
+  {
+    slug: text('slug').primaryKey(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => user.id, { onDelete: 'cascade' }),
+    noteId: text('note_id').notNull(),
+    snapshot: jsonb('snapshot').notNull().$type<NoteShareSnapshot>(),
+    referralCode: text('referral_code'),
+    createdAt: timestamp('created_at').notNull(),
+    expiresAt: timestamp('expires_at').notNull(),
+    revokedAt: timestamp('revoked_at'),
+  },
+  (table) => ({
+    userNoteIdx: uniqueIndex('note_share_user_note_idx').on(table.userId, table.noteId),
   }),
 );
