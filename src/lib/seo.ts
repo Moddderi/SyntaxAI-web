@@ -16,6 +16,15 @@ export const SEO_TITLE = 'SyntaxAI — AI developer notebook for Chrome & Firefo
 export const SEO_DESCRIPTION =
   'Capture code, docs, and screenshots from any tab. SyntaxAI titles, tags, and stacks them into a searchable library. Open beta — free for Chrome and Firefox.';
 
+/** Static 1200×630 card Discord/Slack/iMessage can fetch without hitting the dynamic OG route. */
+export const OG_IMAGE = {
+  url: '/og.png',
+  width: 1200,
+  height: 630,
+  alt: SEO_TITLE,
+  type: 'image/png',
+} as const;
+
 export const SEO_KEYWORDS = [
   'SyntaxAI',
   'AI developer notebook',
@@ -68,11 +77,13 @@ export function buildPageMetadata({
       siteName: SITE_NAME,
       type: 'website',
       locale: 'en_US',
+      images: [OG_IMAGE],
     },
     twitter: {
       card: 'summary_large_image',
       title: socialTitle,
       description,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -143,6 +154,7 @@ export function softwareApplicationJsonLd() {
       'Capture code, docs, and screenshots from any page',
       'AI titles, tags, and stack detection',
       'Searchable local-first snippet library with account sync',
+      'Share a note as a 7-day public link — no account required to view',
       'Chrome and Firefox extension',
     ],
     publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },

@@ -3,6 +3,7 @@ import { JetBrains_Mono, Work_Sans } from 'next/font/google';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteChrome } from '@/components/SiteChrome';
 import {
+  OG_IMAGE,
   SEO_DESCRIPTION,
   SEO_KEYWORDS,
   SEO_TITLE,
@@ -66,11 +67,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: 'en_US',
     type: 'website',
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
   verification: process.env.GOOGLE_SITE_VERIFICATION
     ? { google: process.env.GOOGLE_SITE_VERIFICATION }

@@ -5,6 +5,7 @@ import { SharedNoteCard } from '@/components/share/SharedNoteCard';
 import { db } from '@/lib/db';
 import { getActiveNoteShareBySlug } from '@/lib/note-shares';
 import { user } from '@/lib/schema';
+import { OG_IMAGE, SITE_NAME, absoluteUrl } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,11 +16,30 @@ type SharePageProps = {
 export async function generateMetadata({ params }: SharePageProps): Promise<Metadata> {
   const { slug } = await params;
   const share = await getActiveNoteShareBySlug(slug);
+  const url = absoluteUrl(`/s/${slug}`);
 
   if (!share) {
+    const title = 'Link expired';
+    const description = 'This SyntaxAI share link is no longer available.';
+
     return {
-      title: 'Link expired',
+      title: { absolute: `${title} · ${SITE_NAME}` },
+      description,
       robots: { index: false, follow: false },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: SITE_NAME,
+        type: 'article',
+        images: [OG_IMAGE],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [OG_IMAGE.url],
+      },
     };
   }
 
@@ -27,15 +47,33 @@ export async function generateMetadata({ params }: SharePageProps): Promise<Meta
   const description =
     share.snapshot.summary?.trim().slice(0, 160) ||
     'A developer note shared from SyntaxAI.';
+  const socialTitle = `${title} · ${SITE_NAME}`;
+  const image = {
+    url: `/s/${slug}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: title,
+    type: 'image/png',
+  };
 
   return {
-    title,
+    title: { absolute: socialTitle },
     description,
     robots: { index: false, follow: false },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
+      url,
+      siteName: SITE_NAME,
       type: 'article',
+      locale: 'en_US',
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: socialTitle,
+      description,
+      images: [image.url],
     },
   };
 }
