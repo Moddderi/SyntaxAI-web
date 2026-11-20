@@ -1810,6 +1810,28 @@ body::after {
   }
 }
 
+.share-copied {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.share-copied--on {
+  box-shadow: 0 0 18px rgb(var(--syntax-brand-rgb) / 0.35);
+}
+
+.share-toast {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-copied {
+    transition: none;
+  }
+}
+
 .share-hljs {
   color: #d4d4d4;
 }

@@ -1,5 +1,6 @@
 import insights from '@/assets/shots/insights.png';
 import library from '@/assets/shots/library.png';
+import sharedNote from '@/assets/shots/shared-note.png';
 import sidepanel from '@/assets/shots/sidepanel.png';
 import stack from '@/assets/shots/stack.png';
 
@@ -24,5 +25,9 @@ export const SHOTS = {
   sidepanel: {
     src: sidepanel,
     alt: 'SyntaxAI side panel: paste code or drop an image, then save to library; search tab filters notes by technology',
+  },
+  sharedNote: {
+    src: sharedNote,
+    alt: 'A shared SyntaxAI note page: React counter example with title, tags, summary and highlighted code, plus a 7-day expiry on the link',
   },
 } as const;

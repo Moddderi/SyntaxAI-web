@@ -32,6 +32,11 @@ const CORE_FAQ = [
       'We only process what you explicitly capture. We do not read your tabs in the background. See our Privacy Policy for details.',
   },
   {
+    question: 'Can I share a note with someone who does not have SyntaxAI?',
+    answer:
+      'Yes. Share on a note copies a public link (syntaxai.app/s/…) that lasts 7 days. Anyone with the link can read the title, tags and code — they do not need an account. You can revoke the link earlier from the note.',
+  },
+  {
     question: 'Can I use SyntaxAI on multiple devices?',
     answer:
       'Sign in on each browser so notes can sync through your SyntaxAI account. Local storage keeps the panel snappy; the cloud copy is the backup.',

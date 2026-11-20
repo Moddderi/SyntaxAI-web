@@ -10,6 +10,7 @@ import { HowItWorks } from '@/components/HowItWorks';
 import { InviteTeaser } from '@/components/InviteTeaser';
 import { LiveDemo } from '@/components/LiveDemo';
 import { ScrollProgress } from '@/components/motion/ScrollProgress';
+import { ShareNoteDemo } from '@/components/ShareNoteDemo';
 import { TechMarquee } from '@/components/TechMarquee';
 import { TryFreeSection } from '@/components/TryFreeSection';
 import { SEO_DESCRIPTION, SEO_TITLE, buildPageMetadata } from '@/lib/seo';
@@ -32,6 +33,8 @@ export default function HomePage() {
       <ContextCaptureDemo />
       <HomeFlowDivider />
       <DashboardShowcase />
+      <HomeFlowDivider />
+      <ShareNoteDemo />
       <HomeFlowDivider />
       <FeaturesSection />
       <HomeFlowDivider />
