@@ -45,6 +45,15 @@ export const metadata: Metadata = {
   category: 'technology',
   referrer: 'origin-when-cross-origin',
   formatDetection: { telephone: false, email: false, address: false },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [{ url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' }],
+    shortcut: '/favicon-48x48.png',
+  },
   robots: {
     index: true,
     follow: true,
