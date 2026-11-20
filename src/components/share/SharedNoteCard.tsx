@@ -136,11 +136,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Summary
             </h2>
-            <ShareMarkdown
-              content={summaryMarkdown}
-              fallbackLanguage={snapshot.language}
-              title={snapshot.title}
-            />
+            <ShareMarkdown content={summaryMarkdown} fallbackLanguage={snapshot.language} />
           </section>
         ) : null}
 
@@ -151,11 +147,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Context
             </h2>
-            <ShareMarkdown
-              content={bodyMarkdown}
-              fallbackLanguage={snapshot.language}
-              title={snapshot.title}
-            />
+            <ShareMarkdown content={bodyMarkdown} fallbackLanguage={snapshot.language} />
           </section>
         ) : null}
 
@@ -164,11 +156,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Code
             </h2>
-            <ShareCodeBlock
-              code={snapshot.code}
-              language={snapshot.language}
-              title={snapshot.title}
-            />
+            <ShareCodeBlock code={snapshot.code} language={snapshot.language} />
           </section>
         ) : null}
       </article>
