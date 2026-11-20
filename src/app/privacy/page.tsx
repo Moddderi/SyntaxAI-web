@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { buildPageMetadata } from '@/lib/seo';
 import { SUPPORT_EMAIL } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Privacy Policy',
-  description: 'SyntaxAI privacy policy — what we collect, why, and who processes it.',
-};
+  description:
+    'SyntaxAI privacy policy — what we collect from the Chrome and Firefox extension, why, and which providers process it.',
+  path: '/privacy',
+});
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (

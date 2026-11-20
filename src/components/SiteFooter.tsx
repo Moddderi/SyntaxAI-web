@@ -17,7 +17,7 @@ export function SiteFooter() {
             </span>
           </Link>
           <p className="mt-3 text-sm text-syntax-muted">
-            AI-powered developer notebook for Chrome.
+            AI-powered developer notebook for Chrome and Firefox.
           </p>
         </div>
 

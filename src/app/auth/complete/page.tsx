@@ -4,7 +4,7 @@ import { safeNextPath } from '@/lib/paths';
 
 export const metadata: Metadata = {
   title: 'Signing in',
-  robots: { index: false },
+  robots: { index: false, follow: false },
 };
 
 export default async function AuthCompletePage({

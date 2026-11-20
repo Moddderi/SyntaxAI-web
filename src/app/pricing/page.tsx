@@ -1,16 +1,17 @@
-import type { Metadata } from 'next';
 import { MarketingBackdrop } from '@/components/MarketingBackdrop';
 import { PricingCards } from '@/components/PricingCards';
 import { PricingPageIntro } from '@/components/pricing/PricingPageIntro';
 import { Reveal } from '@/components/motion/Reveal';
+import { buildPageMetadata } from '@/lib/seo';
 import { isBillingEnabled } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: isBillingEnabled ? 'Pricing' : 'Beta',
+export const metadata = buildPageMetadata({
+  title: isBillingEnabled ? 'Pricing' : 'Open beta',
   description: isBillingEnabled
     ? 'SyntaxAI Free and Pro plans — start free, upgrade to Pro at $3.49/mo for unlimited captures.'
-    : 'SyntaxAI open beta — free full access. Invite friends for Pro credits at launch.',
-};
+    : 'SyntaxAI open beta is free with full access. Invite friends for Pro credits when paid plans launch.',
+  path: '/pricing',
+});
 
 export default function PricingPage() {
   return (

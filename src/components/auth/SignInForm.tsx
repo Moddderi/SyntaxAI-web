@@ -97,8 +97,7 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
         Welcome back
       </h1>
       <p className="auth-enter auth-enter-2 mt-3 text-base text-syntax-muted">
-        Sign in to manage your plan and connect the extension later. Notes stay on your device
-        for now.
+        Sign in to sync your library, connect the extension, and share your invite link.
       </p>
 
       <div className="auth-enter auth-enter-3 mt-10 space-y-3">
@@ -134,7 +133,7 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
       <p className="auth-enter auth-enter-4 mt-10 text-center text-sm text-syntax-muted">
         New here? Install the{' '}
         <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/">
-          Chrome extension
+          extension
         </Link>{' '}
         or read about{' '}
         <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/pricing">

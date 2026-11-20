@@ -1,11 +1,13 @@
-import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { buildPageMetadata } from '@/lib/seo';
 import { SUPPORT_EMAIL } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: 'Terms of Service',
-  description: 'SyntaxAI terms of service.',
-};
+  description:
+    'SyntaxAI terms of service for the open beta — accounts, your notes, AI processing, and acceptable use.',
+  path: '/terms',
+});
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (

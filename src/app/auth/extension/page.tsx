@@ -5,7 +5,8 @@ import { getServerSession } from '@/lib/auth';
 
 export const metadata: Metadata = {
   title: 'Connect extension',
-  description: 'Pair the SyntaxAI Chrome extension with your account.',
+  description: 'Pair the SyntaxAI browser extension with your account.',
+  robots: { index: false, follow: false },
 };
 
 export default async function ExtensionAuthPage() {

@@ -11,7 +11,8 @@ import { user } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Account',
-  description: 'Manage your SyntaxAI plan and billing.',
+  description: 'Manage your SyntaxAI account, invites, and extension connection.',
+  robots: { index: false, follow: false },
 };
 
 function fallbackReferralCode(userId: string) {

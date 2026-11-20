@@ -1,0 +1,12 @@
+# SyntaxAI
+
+> AI developer notebook browser extension. Capture code, docs, and screenshots from any tab; SyntaxAI titles, tags, and stacks them into a searchable library.
+
+- Site: https://syntaxai.app
+- Chrome: https://chromewebstore.google.com/detail/syntaxai/fbkbpcidobeacdbhhinjgbdecnnadejm
+- Firefox: https://addons.mozilla.org/en-US/firefox/addon/syntaxai/
+- Privacy: https://syntaxai.app/privacy
+- Terms: https://syntaxai.app/terms
+- Support: hello@syntaxai.app
+
+Open beta is free with full access. Paid plans are not billed yet. Notes are local-first and sync to the signed-in account. AI runs only on content the user explicitly captures.

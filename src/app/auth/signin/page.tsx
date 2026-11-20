@@ -5,7 +5,8 @@ import { safeNextPath } from '@/lib/paths';
 
 export const metadata: Metadata = {
   title: 'Sign in',
-  description: 'Sign in to SyntaxAI with Google or GitHub to manage your Pro plan.',
+  description: 'Sign in to SyntaxAI with Google or GitHub to sync your library and invite friends.',
+  robots: { index: false, follow: false },
 };
 
 export default async function SignInPage({

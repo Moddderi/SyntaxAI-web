@@ -1,20 +1,10 @@
 import { ImageResponse } from 'next/og';
+import { BrandMark } from '@/lib/brand-mark';
 import { TECHS } from '@/lib/techIcons';
 
-export const alt = 'SyntaxAI — AI developer notebook for Chrome';
+export const alt = 'SyntaxAI — AI developer notebook for Chrome and Firefox';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-
-/** Brand mark (same bars as /logo-mark.png), drawn as vector so it stays crisp. */
-function LogoMark({ size: s }: { size: number }) {
-  return (
-    <svg width={s} height={s * 0.75} viewBox="80 170 660 510" fill="#ffffff">
-      <polygon points="170,408 302,408 238,612 160,612 90,662" />
-      <polygon points="378,298 514,298 412,612 278,612" />
-      <polygon points="596,182 726,182 590,612 456,612" />
-    </svg>
-  );
-}
 
 const notes = [
   { tech: { ...TECHS.typescript, color: '#4c9aff' }, title: 'Debounce hook' },
@@ -108,7 +98,7 @@ export default function OpenGraphImage() {
                   border: '1.5px solid rgba(255,255,255,0.18)',
                 }}
               >
-                <LogoMark size={36} />
+                <BrandMark size={36} />
               </div>
               <div
                 style={{
@@ -161,7 +151,7 @@ export default function OpenGraphImage() {
                   fontWeight: 700,
                 }}
               >
-                Free for Chrome
+                Open beta · free
               </div>
               <div
                 style={{

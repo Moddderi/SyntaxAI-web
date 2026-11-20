@@ -1,6 +1,15 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Work_Sans } from 'next/font/google';
+import { JsonLd } from '@/components/JsonLd';
 import { SiteChrome } from '@/components/SiteChrome';
+import {
+  SEO_DESCRIPTION,
+  SEO_KEYWORDS,
+  SEO_TITLE,
+  SITE_NAME,
+  organizationJsonLd,
+  websiteJsonLd,
+} from '@/lib/seo';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -16,32 +25,47 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['700'],
 });
 
+export const viewport: Viewport = {
+  themeColor: '#050505',
+  colorScheme: 'dark',
+};
+
 export const metadata: Metadata = {
-  title: {
-    default: 'SyntaxAI — AI developer notebook for Chrome',
-    template: '%s · SyntaxAI',
-  },
-  description:
-    'Turn every tab into a code library. Capture snippets, docs, and screenshots — AI titles, tags, and a searchable library in Chrome.',
   metadataBase: new URL(SITE_URL),
-  icons: {
-    icon: [{ url: '/logo-mark.png', type: 'image/png' }],
-    apple: [{ url: '/logo-mark.png', type: 'image/png' }],
+  title: {
+    default: SEO_TITLE,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SEO_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: SEO_KEYWORDS,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: 'technology',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
   },
   openGraph: {
-    title: 'SyntaxAI — AI developer notebook for Chrome',
-    description:
-      'Capture code, docs, and screenshots from any page. AI-powered developer notebook extension.',
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
     url: SITE_URL,
-    siteName: 'SyntaxAI',
+    siteName: SITE_NAME,
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'SyntaxAI — AI developer notebook for Chrome',
-    description:
-      'Capture code, docs, and screenshots from any page. AI-powered developer notebook extension.',
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
   },
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export default function RootLayout({
@@ -56,6 +80,8 @@ export default function RootLayout({
       lang="en"
     >
       <body className="flex min-h-full flex-col bg-syntax-bg font-sans text-syntax-text antialiased">
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
