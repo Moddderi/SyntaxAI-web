@@ -1809,3 +1809,64 @@ body::after {
     transition: none;
   }
 }
+
+.share-hljs {
+  color: #d4d4d4;
+}
+
+.share-hljs .hljs-comment,
+.share-hljs .hljs-quote {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.share-hljs .hljs-keyword,
+.share-hljs .hljs-selector-tag,
+.share-hljs .hljs-literal,
+.share-hljs .hljs-section,
+.share-hljs .hljs-link {
+  color: #569cd6;
+}
+
+.share-hljs .hljs-string,
+.share-hljs .hljs-addition,
+.share-hljs .hljs-attribute,
+.share-hljs .hljs-symbol {
+  color: #ce9178;
+}
+
+.share-hljs .hljs-number,
+.share-hljs .hljs-regexp {
+  color: #b5cea8;
+}
+
+.share-hljs .hljs-title,
+.share-hljs .hljs-title.function_,
+.share-hljs .hljs-name {
+  color: #dcdcaa;
+}
+
+.share-hljs .hljs-type,
+.share-hljs .hljs-class .hljs-title,
+.share-hljs .hljs-built_in,
+.share-hljs .hljs-params,
+.share-hljs .hljs-attr {
+  color: #4ec9b0;
+}
+
+.share-hljs .hljs-variable,
+.share-hljs .hljs-template-variable,
+.share-hljs .hljs-property {
+  color: #9cdcfe;
+}
+
+.share-hljs .hljs-meta,
+.share-hljs .hljs-doctag {
+  color: #c586c0;
+}
+
+.share-hljs .hljs-tag,
+.share-hljs .hljs-selector-class,
+.share-hljs .hljs-selector-id {
+  color: #569cd6;
+}

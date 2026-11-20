@@ -1,87 +1,27 @@
-'use client';
-
-import { useMemo, useState, type CSSProperties } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { resolveSharePrismLanguage } from '@/lib/sharePrismLanguage';
-
-const CODE_BLOCK_THEME: Record<string, CSSProperties> = {
-  ...vscDarkPlus,
-  'pre[class*="language-"]': {
-    ...(vscDarkPlus['pre[class*="language-"]'] as CSSProperties | undefined),
-    background: 'transparent',
-    margin: 0,
-    padding: 0,
-    border: 0,
-    boxShadow: 'none',
-  },
-  'code[class*="language-"]': {
-    ...(vscDarkPlus['code[class*="language-"]'] as CSSProperties | undefined),
-    background: 'transparent',
-    padding: 0,
-    textShadow: 'none',
-  },
-};
+import { ShareCodeActions } from '@/components/share/ShareCodeActions';
+import { highlightShareCode, resolveShareHighlightLanguage } from '@/lib/highlightShareCode';
 
 interface ShareCodeBlockProps {
   code: string;
   language?: string;
+  title?: string;
 }
 
-export function ShareCodeBlock({ code, language }: ShareCodeBlockProps) {
-  const [isCopied, setIsCopied] = useState(false);
-  const highlighterLanguage = useMemo(
-    () => resolveSharePrismLanguage(language),
-    [language],
-  );
-
-  const handleCopy = (): void => {
-    void navigator.clipboard.writeText(code).then(() => {
-      setIsCopied(true);
-      window.setTimeout(() => setIsCopied(false), 1200);
-    });
-  };
+export function ShareCodeBlock({ code, language, title }: ShareCodeBlockProps) {
+  const highlighted = highlightShareCode(code, language);
+  const languageLabel = resolveShareHighlightLanguage(language);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-syntax-border bg-syntax-code">
-      <div className="flex items-center justify-between gap-2 border-b border-syntax-border px-3 py-1.5">
+      <div className="flex items-center justify-between gap-2 border-b border-syntax-border px-3 py-1">
         <span className="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-syntax-muted">
-          {highlighterLanguage}
+          {languageLabel === 'plaintext' ? 'code' : languageLabel}
         </span>
-        <button
-          aria-label={isCopied ? 'Copied' : 'Copy code'}
-          className="rounded-md px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] text-syntax-muted transition hover:bg-syntax-hover hover:text-syntax-text"
-          onClick={handleCopy}
-          type="button"
-        >
-          {isCopied ? 'Copied' : 'Copy'}
-        </button>
+        <ShareCodeActions code={code} title={title} />
       </div>
-      <div className="max-h-[28rem] overflow-auto px-4 py-3 [scrollbar-width:thin]">
-        <SyntaxHighlighter
-          codeTagProps={{
-            style: {
-              fontFamily:
-                'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-              fontSize: '13px',
-              lineHeight: '1.55',
-              whiteSpace: 'pre',
-            },
-          }}
-          customStyle={{
-            margin: 0,
-            padding: 0,
-            background: 'transparent',
-            overflow: 'visible',
-          }}
-          language={highlighterLanguage}
-          PreTag="div"
-          style={CODE_BLOCK_THEME}
-          wrapLongLines={false}
-        >
-          {code}
-        </SyntaxHighlighter>
-      </div>
+      <pre className="share-hljs max-h-[28rem] overflow-auto px-4 py-3 font-mono text-[13px] leading-relaxed [scrollbar-width:thin]">
+        <code dangerouslySetInnerHTML={{ __html: highlighted }} />
+      </pre>
     </div>
   );
 }

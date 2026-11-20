@@ -47,9 +47,11 @@ const markdownComponents: Components = {
 export function ShareMarkdown({
   content,
   fallbackLanguage,
+  title,
 }: {
   content: string;
   fallbackLanguage?: string;
+  title?: string;
 }) {
   const components: Components = {
     ...markdownComponents,
@@ -62,6 +64,7 @@ export function ShareMarkdown({
           <ShareCodeBlock
             code={codeText}
             language={languageMatch?.[1] ?? fallbackLanguage}
+            title={title}
           />
         );
       }
