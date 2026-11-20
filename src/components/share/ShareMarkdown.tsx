@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { ShareCodeBlock } from '@/components/share/ShareCodeBlock';
 
 const markdownComponents: Components = {
   h1: ({ children }) => (
@@ -41,29 +42,40 @@ const markdownComponents: Components = {
   em: ({ children }) => <em className="italic">{children}</em>,
   hr: () => <hr className="my-4 border-syntax-border" />,
   pre: ({ children }) => <div className="my-4">{children}</div>,
-  code: ({ className, children }) => {
-    const languageMatch = /language-([\w-]+)/.exec(className ?? '');
-    const codeText = String(children).replace(/\n$/, '');
-
-    if (languageMatch || codeText.includes('\n')) {
-      return (
-        <pre className="max-h-[28rem] overflow-auto rounded-2xl border border-syntax-border bg-syntax-bg p-4 font-mono text-[13px] leading-relaxed text-syntax-text">
-          <code>{codeText}</code>
-        </pre>
-      );
-    }
-
-    return (
-      <code className="rounded-md border border-syntax-border bg-syntax-bg px-1.5 py-0.5 font-mono text-[12px] text-syntax-text">
-        {children}
-      </code>
-    );
-  },
 };
 
-export function ShareMarkdown({ content }: { content: string }) {
+export function ShareMarkdown({
+  content,
+  fallbackLanguage,
+}: {
+  content: string;
+  fallbackLanguage?: string;
+}) {
+  const components: Components = {
+    ...markdownComponents,
+    code: ({ className, children }) => {
+      const languageMatch = /language-([\w-]+)/.exec(className ?? '');
+      const codeText = String(children).replace(/\n$/, '');
+
+      if (languageMatch || codeText.includes('\n')) {
+        return (
+          <ShareCodeBlock
+            code={codeText}
+            language={languageMatch?.[1] ?? fallbackLanguage}
+          />
+        );
+      }
+
+      return (
+        <code className="rounded-md border border-syntax-border bg-syntax-bg px-1.5 py-0.5 font-mono text-[12px] text-syntax-text">
+          {children}
+        </code>
+      );
+    },
+  };
+
   return (
-    <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkGfm]}>
+    <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
       {content}
     </ReactMarkdown>
   );

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { BrowserInstallButtons } from '@/components/BrowserInstallButtons';
 import { Logo } from '@/components/Logo';
+import { ShareCodeBlock } from '@/components/share/ShareCodeBlock';
 import { ShareMarkdown } from '@/components/share/ShareMarkdown';
 import type { NoteShareSnapshot } from '@/lib/note-share-types';
 import { resolveShareTech } from '@/lib/resolveShareTech';
@@ -135,7 +136,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Summary
             </h2>
-            <ShareMarkdown content={summaryMarkdown} />
+            <ShareMarkdown content={summaryMarkdown} fallbackLanguage={snapshot.language} />
           </section>
         ) : null}
 
@@ -146,7 +147,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Context
             </h2>
-            <ShareMarkdown content={bodyMarkdown} />
+            <ShareMarkdown content={bodyMarkdown} fallbackLanguage={snapshot.language} />
           </section>
         ) : null}
 
@@ -155,9 +156,7 @@ export function SharedNoteCard({ snapshot, expiresAt, sharerName }: SharedNoteCa
             <h2 className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
               Code
             </h2>
-            <pre className="max-h-[28rem] overflow-auto rounded-2xl border border-syntax-border bg-syntax-bg p-4 font-mono text-[13px] leading-relaxed text-syntax-text">
-              <code>{snapshot.code}</code>
-            </pre>
+            <ShareCodeBlock code={snapshot.code} language={snapshot.language} />
           </section>
         ) : null}
       </article>
