@@ -74,7 +74,7 @@ export async function upsertNotesFromClient(
     const now = new Date();
     const tagsJson = JSON.stringify(item.tags);
     const stackJson = item.stack ? JSON.stringify(item.stack) : null;
-    const deletedAt = item.deleted ? clientUpdated : null;
+    const deletedAt = item.deleted ? now : null;
 
     if (row) {
       await db
@@ -85,7 +85,7 @@ export async function upsertNotesFromClient(
           tags: tagsJson,
           pageUrl: item.pageUrl ?? null,
           stack: stackJson,
-          updatedAt: clientUpdated,
+          updatedAt: now,
           deletedAt,
         })
         .where(and(eq(note.id, item.id), eq(note.userId, userId)));
@@ -99,7 +99,7 @@ export async function upsertNotesFromClient(
         pageUrl: item.pageUrl ?? null,
         stack: stackJson,
         createdAt: now,
-        updatedAt: clientUpdated,
+        updatedAt: now,
         deletedAt: null,
       });
     } else {
