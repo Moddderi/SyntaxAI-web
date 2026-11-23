@@ -4,6 +4,7 @@ import { BetaAccessPanel } from '@/components/account/BetaAccessPanel';
 import { ProfileStats } from '@/components/account/ProfileStats';
 import { ReferralProgress } from '@/components/account/ReferralProgress';
 import { SubscriptionPanel } from '@/components/account/SubscriptionPanel';
+import { ExtensionConnectBanner } from '@/components/auth/ExtensionConnectBanner';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { isBillingEnabled } from '@/lib/site';
 
@@ -94,6 +95,8 @@ export function AccountDashboard({
           </p>
         ) : null}
       </header>
+
+      <ExtensionConnectBanner />
 
       <div className="grid gap-5 lg:grid-cols-3 lg:items-stretch">
         <AccountCard label="User profile">
