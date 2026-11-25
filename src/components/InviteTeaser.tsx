@@ -36,7 +36,7 @@ export function InviteTeaser() {
                     </span>
                   </div>
                   <p className="mt-5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-syntax-muted">
-                    {tier.friends === 1 ? 'Invite 1 friend' : `Invite ${tier.friends} friends`}
+                    {`Invite ${tier.friends} friends`}
                   </p>
                   <p className="brand-text mt-2 font-mono text-lg font-bold uppercase tracking-[0.06em]">
                     {tier.reward}
