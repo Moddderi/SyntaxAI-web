@@ -1533,6 +1533,26 @@ body::after {
     0 0 40px rgb(var(--syntax-brand-rgb) / 0.14);
 }
 
+.btn-brand {
+  background: var(--syntax-brand);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 0 28px rgb(var(--syntax-brand-rgb) / 0.45);
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn-brand:hover {
+  background: #7c4eed;
+  box-shadow: 0 0 36px rgb(var(--syntax-brand-rgb) / 0.55);
+}
+
+.btn-brand:active {
+  transform: scale(0.98);
+}
+
 .btn-primary {
   box-shadow:
     0 0 26px rgb(var(--syntax-brand-rgb) / 0.4),

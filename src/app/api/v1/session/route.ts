@@ -4,7 +4,8 @@ import {
   extensionJson,
   extensionOptions,
 } from '@/lib/extension-api';
-import { asPlan } from '@/lib/plan';
+import { planForAccount } from '@/lib/plan';
+import { enforceRateLimit, SESSION_RATE_LIMITS } from '@/lib/rate-limit';
 import { FREE_LIMITS, isBillingEnabled } from '@/lib/site';
 
 export const runtime = 'nodejs';
@@ -19,7 +20,12 @@ export async function GET(request: NextRequest) {
     return extensionJson({ error: 'Unauthorized' }, 401);
   }
 
-  const plan = asPlan(user.plan);
+  const limited = enforceRateLimit('session', user.id, SESSION_RATE_LIMITS);
+  if (limited) {
+    return limited;
+  }
+
+  const plan = planForAccount(user.email, user.plan);
 
   return extensionJson({
     user: {

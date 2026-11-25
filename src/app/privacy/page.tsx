@@ -150,7 +150,7 @@ export default function PrivacyPage() {
             <li>Cloudflare — DNS and network delivery.</li>
             <li>Resend — email delivery of feedback and bug reports.</li>
             <li>Google and GitHub — sign-in (OAuth).</li>
-            <li>Polar.sh — payments, only when paid plans are enabled.</li>
+            <li>Creem — payments, only when paid plans are enabled.</li>
           </ul>
         </Section>
 

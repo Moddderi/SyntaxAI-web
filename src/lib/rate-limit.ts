@@ -110,7 +110,13 @@ export const FEEDBACK_RATE_LIMITS: readonly RateLimitRule[] = [
   { limit: 20, windowMs: 24 * 60 * 60_000 },
 ];
 
-export const NOTES_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 120, windowMs: 60_000 }];
+export const NOTES_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 60, windowMs: 60_000 }];
+
+export const SESSION_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 30, windowMs: 60_000 }];
+
+export const DEVICE_TOKEN_RATE_LIMITS: readonly RateLimitRule[] = [
+  { limit: 20, windowMs: 60 * 60_000 },
+];
 
 export const PROFILE_RATE_LIMITS: readonly RateLimitRule[] = [{ limit: 10, windowMs: 60_000 }];
 

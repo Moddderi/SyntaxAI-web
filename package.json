@@ -15,9 +15,8 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@creem_io/better-auth": "^3.0.0",
     "@neondatabase/serverless": "^1.1.0",
-    "@polar-sh/better-auth": "^2.0.0",
-    "@polar-sh/sdk": "^1.0.1",
     "better-auth": "^1.7.7",
     "drizzle-orm": "^0.45.3",
     "highlight.js": "^11.12.0",

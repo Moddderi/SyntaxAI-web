@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { openBillingPortal } from '@/lib/billing-client';
 import { isBillingEnabled } from '@/lib/site';
 
 export function AccountActions({
@@ -20,13 +21,13 @@ export function AccountActions({
     setBusy('portal');
     setError(null);
 
-    const { data, error: portalError } = await authClient.customer.portal();
-    if (data?.url) {
-      window.location.href = data.url;
+    const { url, error: portalError } = await openBillingPortal();
+    if (url) {
+      window.location.href = url;
       return;
     }
 
-    setError(portalError?.message || 'Could not open the billing portal.');
+    setError(portalError || 'Could not open the billing portal.');
     setBusy(null);
   }
 

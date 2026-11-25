@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
+import { startProCheckout } from '@/lib/billing-client';
 import { isBillingEnabled } from '@/lib/site';
 
 const subscribeNoop = (): (() => void) => () => undefined;
@@ -17,7 +18,13 @@ function useIsMounted(): boolean {
   );
 }
 
-export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
+export function UpgradeButton({
+  isPro = false,
+  label,
+}: {
+  isPro?: boolean;
+  label?: string;
+}) {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const [busy, setBusy] = useState(false);
@@ -54,34 +61,32 @@ export function UpgradeButton({ isPro = false }: { isPro?: boolean }) {
     setBusy(true);
     setError(null);
 
-    const { data, error: checkoutError } = await authClient.checkout({
-      slug: 'pro',
-    });
+    const { url, error: checkoutError } = await startProCheckout();
 
-    if (data?.url) {
-      window.location.href = data.url;
+    if (url) {
+      window.location.href = url;
       return;
     }
 
-    setError(checkoutError?.message || 'Checkout is not available yet.');
+    setError(checkoutError || 'Checkout is not available yet.');
     setBusy(false);
   }
 
-  const label = isPro
+  const buttonLabel = isPro
     ? 'Manage billing'
     : busy
-      ? 'Opening Polar…'
-      : 'Upgrade to Pro';
+      ? 'Opening checkout…'
+      : (label ?? 'Start 7-day free trial');
 
   return (
     <div>
       <button
-        className="btn-primary mt-8 inline-flex h-11 w-full items-center justify-center rounded-full text-[11px] disabled:cursor-wait disabled:opacity-70"
+        className="btn-brand inline-flex h-12 w-full items-center justify-center rounded-full text-sm disabled:cursor-wait disabled:opacity-70"
         disabled={busy || (mounted && isPending)}
         onClick={upgrade}
         type="button"
       >
-        {label}
+        {buttonLabel}
       </button>
       {error ? <p className="mt-3 text-center text-xs text-red-400">{error}</p> : null}
     </div>

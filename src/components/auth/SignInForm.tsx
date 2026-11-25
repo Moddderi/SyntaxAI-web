@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { safeNextPath } from '@/lib/paths';
+import { isBillingEnabled } from '@/lib/site';
 
 type SocialProvider = 'google' | 'github';
 
@@ -137,7 +138,7 @@ export function SignInForm({ nextPath, githubEnabled }: SignInFormProps) {
         </Link>{' '}
         or read about{' '}
         <Link className="font-medium text-syntax-text underline-offset-4 hover:underline" href="/pricing">
-          open beta
+          {isBillingEnabled ? 'pricing' : 'open beta'}
         </Link>
         .
       </p>

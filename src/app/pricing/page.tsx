@@ -20,15 +20,16 @@ export default function PricingPage() {
       <div className="relative z-10 mx-auto max-w-6xl px-6 py-16 md:py-20">
         <PricingPageIntro />
 
-        <PricingCards showFreeCta={!isBillingEnabled} />
+        <PricingCards />
 
-        <Reveal className="mt-10" variant="up">
-          <p className="text-sm text-syntax-muted">
-            {isBillingEnabled
-              ? 'Beta testers who send thoughtful feedback may receive 1 month of Pro free at launch.'
-              : 'Share your invite from Account. Friends who join with your link count toward Pro rewards when we turn billing on.'}
-          </p>
-        </Reveal>
+        {isBillingEnabled ? null : (
+          <Reveal className="mt-10" variant="up">
+            <p className="text-sm text-syntax-muted">
+              Share your invite from Account. Friends who join with your link count toward Pro
+              rewards when we turn billing on.
+            </p>
+          </Reveal>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { auth } from '@/lib/auth';
 import { issueDeviceToken } from '@/lib/device-token';
 import { EXTENSION_CORS_HEADERS } from '@/lib/extension-api';
+import { DEVICE_TOKEN_RATE_LIMITS, enforceRateLimit } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -16,6 +17,11 @@ export async function POST(request: Request) {
   const session = await auth.api.getSession({ headers: request.headers });
   if (!session?.user) {
     return json({ error: 'Unauthorized' }, 401);
+  }
+
+  const limited = enforceRateLimit('device-token', session.user.id, DEVICE_TOKEN_RATE_LIMITS);
+  if (limited) {
+    return limited;
   }
 
   const issued = await issueDeviceToken(session.user.id);

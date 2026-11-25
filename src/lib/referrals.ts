@@ -4,7 +4,13 @@ import { db } from './db';
 import { referralMeta } from './schema';
 import { SITE_URL } from './site';
 
-export { REFERRAL_GOAL, REFERRAL_MILESTONES } from './referralTiers';
+export {
+  REFERRAL_FRIEND_REWARD_DAYS,
+  REFERRAL_GOAL,
+  REFERRAL_INVITER_REWARD_DAYS,
+  REFERRAL_MILESTONES,
+  REFERRAL_STEPS,
+} from './referralTiers';
 
 export function buildReferralLink(code: string) {
   const base = SITE_URL.replace(/\/$/, '');

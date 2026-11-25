@@ -10,6 +10,8 @@ export const user = pgTable('user', {
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
   plan: text('plan').notNull().default('free'),
+  creemCustomerId: text('creem_customer_id'),
+  hadTrial: boolean('had_trial').notNull().default(false),
 });
 
 export const referralMeta = pgTable('referral_meta', {

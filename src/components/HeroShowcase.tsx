@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { TiltFrame } from '@/components/motion/TiltFrame';
-import { HERO_VIDEO_URL } from '@/lib/site';
+import { HERO_VIDEO_URL, YOUTUBE_PROMO_URL } from '@/lib/site';
 import { SHOTS } from '@/lib/shots';
 
 function ChipJs() {
@@ -52,7 +52,13 @@ export function HeroShowcase() {
       <TiltFrame className="relative">
         {/* main window */}
         <div className="hero-frame relative rounded-2xl">
-          <div className="relative overflow-hidden rounded-2xl border border-syntax-border bg-syntax-card shadow-[0_40px_90px_rgba(0,0,0,0.7)]">
+          <a
+            aria-label="Watch the full video on YouTube"
+            className="group/video relative block overflow-hidden rounded-2xl border border-syntax-border bg-syntax-card shadow-[0_40px_90px_rgba(0,0,0,0.7)] outline-none ring-syntax-brand/0 transition hover:border-white/25 focus-visible:ring-2"
+            href={YOUTUBE_PROMO_URL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <div className="flex items-center gap-2 border-b border-syntax-border bg-[var(--syntax-code-header)] px-4 py-3">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -66,7 +72,7 @@ export function HeroShowcase() {
               {HERO_VIDEO_URL ? (
                 <video
                   autoPlay
-                  className="aspect-[1500/951] w-full object-cover"
+                  className="pointer-events-none aspect-[1500/951] w-full object-cover"
                   loop
                   muted
                   playsInline
@@ -75,7 +81,7 @@ export function HeroShowcase() {
               ) : (
                 <Image
                   alt={library.alt}
-                  className="h-auto w-full"
+                  className="pointer-events-none h-auto w-full"
                   fetchPriority="high"
                   loading="eager"
                   src={library.src}
@@ -84,8 +90,15 @@ export function HeroShowcase() {
               )}
               <span aria-hidden className="feature-shot__scan" />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/70 to-transparent" />
+              <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition group-hover/video:bg-black/30 group-hover/video:opacity-100">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-black shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+                  <svg aria-hidden="true" className="ml-0.5 h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5.14v13.72L19.5 12 8 5.14Z" />
+                  </svg>
+                </span>
+              </span>
             </div>
-          </div>
+          </a>
         </div>
 
         {/* floating side panel */}

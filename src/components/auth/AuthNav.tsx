@@ -19,8 +19,8 @@ export function AuthNav({ compact = false }: { compact?: boolean }) {
       <Link
         className={
           compact
-            ? 'text-base font-medium text-syntax-muted transition hover:text-syntax-text'
-            : 'btn-secondary inline-flex h-9 items-center rounded-full px-4 text-xs font-medium'
+            ? 'btn-brand inline-flex h-11 items-center justify-center rounded-full text-sm'
+            : 'btn-brand inline-flex h-9 items-center rounded-full px-4 text-sm'
         }
         href="/account"
       >
@@ -31,14 +31,14 @@ export function AuthNav({ compact = false }: { compact?: boolean }) {
 
   return (
     <Link
-      className={
-        compact
-          ? 'text-base font-medium text-syntax-muted transition hover:text-syntax-text'
-          : 'btn-secondary inline-flex h-9 items-center rounded-full px-4 text-xs font-medium'
-      }
-      href="/auth/signin"
-    >
-      Sign in
-    </Link>
+        className={
+          compact
+            ? 'text-base font-medium text-syntax-muted transition hover:text-syntax-text'
+            : 'inline-flex h-9 items-center px-2 text-sm font-medium text-syntax-muted transition hover:text-syntax-text'
+        }
+        href="/auth/signin"
+      >
+        Sign in
+      </Link>
   );
 }

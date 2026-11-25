@@ -1,20 +1,32 @@
 /** Pure data (no DB) so marketing components can import it. */
-export const REFERRAL_MILESTONES = [
+
+export const REFERRAL_GOAL = 5;
+export const REFERRAL_INVITER_REWARD_DAYS = 30;
+export const REFERRAL_FRIEND_REWARD_DAYS = 7;
+
+export const REFERRAL_STEPS = [
   {
-    friends: 1,
-    title: '1 friend',
-    reward: '1 week Pro at launch',
+    step: 1,
+    title: 'Share link',
+    detail: 'Copy your invite and send it to a friend.',
   },
   {
-    friends: 3,
-    title: '3 friends',
-    reward: '1 month Pro at launch',
+    step: 2,
+    title: `Friend gets ${REFERRAL_FRIEND_REWARD_DAYS} days Pro`,
+    detail: 'They sign up with your link and unlock a week of Pro.',
   },
   {
-    friends: 7,
-    title: '7 friends',
-    reward: '3 months Pro at launch',
+    step: 3,
+    title: `You get ${REFERRAL_INVITER_REWARD_DAYS} days Pro`,
+    detail: `Invite ${REFERRAL_GOAL} friends to unlock 1 month of Pro.`,
   },
 ] as const;
 
-export const REFERRAL_GOAL = REFERRAL_MILESTONES[REFERRAL_MILESTONES.length - 1].friends;
+/** @deprecated kept for older marketing blocks that still map a list */
+export const REFERRAL_MILESTONES = [
+  {
+    friends: REFERRAL_GOAL,
+    title: `${REFERRAL_GOAL} friends`,
+    reward: '1 month of Pro',
+  },
+] as const;

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authClient } from '@/lib/auth-client';
+import { openBillingPortal } from '@/lib/billing-client';
 import { FREE_LIMITS, PRO_PRICE } from '@/lib/site';
 
 function Benefit({ children, dimmed = false }: { children: string; dimmed?: boolean }) {
@@ -25,13 +25,13 @@ export function SubscriptionPanel({ isPro }: { isPro: boolean }) {
     setBusy(true);
     setError(null);
 
-    const { data, error: portalError } = await authClient.customer.portal();
-    if (data?.url) {
-      window.location.href = data.url;
+    const { url, error: portalError } = await openBillingPortal();
+    if (url) {
+      window.location.href = url;
       return;
     }
 
-    setError(portalError?.message || 'Could not open the billing portal.');
+    setError(portalError || 'Could not open the billing portal.');
     setBusy(false);
   }
 
@@ -95,7 +95,7 @@ export function SubscriptionPanel({ isPro }: { isPro: boolean }) {
               <span aria-hidden="true">→</span>
             </button>
             <p className="mt-3 text-center text-xs text-syntax-muted">
-              Cancel anytime · Billed via Polar
+              Cancel anytime · Billed via Creem
             </p>
           </>
         )}

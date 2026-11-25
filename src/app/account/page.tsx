@@ -5,7 +5,7 @@ import { AccountDashboard } from '@/components/account/AccountDashboard';
 import { getAccountMemberStats } from '@/lib/account-stats';
 import { getServerSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { asPlan, refreshPlanFromPolar } from '@/lib/plan';
+import { asPlan, refreshPlan } from '@/lib/plan';
 import { buildReferralLink, ensureReferralCode, getReferralCount } from '@/lib/referrals';
 import { user } from '@/lib/schema';
 
@@ -30,7 +30,7 @@ export default async function AccountPage({
   }
 
   const { checkout, welcome } = await searchParams;
-  const plan = await refreshPlanFromPolar(session.user.id);
+  const plan = await refreshPlan(session.user.id);
   const isPro = plan === 'pro' || asPlan(session.user.plan) === 'pro';
 
   let referralCode = fallbackReferralCode(session.user.id);

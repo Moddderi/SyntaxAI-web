@@ -1,6 +1,6 @@
-import { isBillingEnabled } from '@/lib/site';
+import { FREE_LIMITS, PRO_PRICE } from '@/lib/site';
 
-const CORE_FAQ = [
+export const FAQ_ITEMS = [
   {
     question: 'How does SyntaxAI capture snippets from a page?',
     answer:
@@ -10,6 +10,15 @@ const CORE_FAQ = [
     question: 'Which browsers are supported?',
     answer:
       'SyntaxAI is available for Chrome and Firefox from the homepage install buttons. Chromium-based browsers (Brave, Edge, Arc) can use the Chrome Web Store build.',
+  },
+  {
+    question: 'Is SyntaxAI free to use?',
+    answer: `Yes. Free includes ${FREE_LIMITS.notes} notes, ${FREE_LIMITS.contextSaves} page context captures, and ${FREE_LIMITS.photoReads} photo reads — forever, no credit card. Pro is ${PRO_PRICE}/mo for unlimited usage.`,
+  },
+  {
+    question: 'How do I start Pro or cancel?',
+    answer:
+      'Sign in, open Pricing or Account, and start a 7-day free trial. Billing is handled by Creem. Cancel anytime from the customer portal — cancel during the trial and you are not charged.',
   },
   {
     question: 'Where is my library stored?',
@@ -41,36 +50,4 @@ const CORE_FAQ = [
     answer:
       'Sign in on each browser so notes can sync through your SyntaxAI account. Local storage keeps the panel snappy; the cloud copy is the backup.',
   },
-] as const;
-
-const BILLING_FAQ = [
-  {
-    question: 'Is SyntaxAI free to use?',
-    answer:
-      'Yes. The free plan includes generous limits for notes, context captures, and photo reads. Upgrade to Pro when you need unlimited usage.',
-  },
-  {
-    question: 'How do I upgrade or cancel Pro?',
-    answer:
-      'Sign in, open Account, and use Upgrade to Pro. Billing is handled by Polar — you can cancel anytime from the customer portal.',
-  },
-] as const;
-
-const BETA_FAQ = [
-  {
-    question: 'Is SyntaxAI free during beta?',
-    answer:
-      'Yes. Open beta is free with full access — no Free/Pro limits for now. Paid plans will launch later; invite friends to earn Pro credits for that launch.',
-  },
-  {
-    question: 'How do invites work?',
-    answer:
-      'Sign in, open Account, and copy your invite link. Friends who sign up with your link count toward milestones (1 / 3 / 7). Rewards are Pro time credited when billing goes live.',
-  },
-] as const;
-
-export const FAQ_ITEMS = [
-  ...CORE_FAQ.slice(0, 2),
-  ...(isBillingEnabled ? BILLING_FAQ : BETA_FAQ),
-  ...CORE_FAQ.slice(2),
 ] as const;

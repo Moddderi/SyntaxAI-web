@@ -1,31 +1,39 @@
-import { CHROME_STORE_URL, FIREFOX_ADDON_URL } from '@/lib/site';
+'use client';
 
-const STORE_BTN =
-  'inline-flex h-8 min-w-[5.25rem] items-center justify-center rounded-full px-3 font-mono text-[10px] font-bold uppercase tracking-[0.1em] transition duration-200 motion-safe:hover:scale-[1.02] motion-safe:active:scale-[0.98]';
+import Image from 'next/image';
+import { authClient } from '@/lib/auth-client';
+import { BROWSER_ICON_CHROME, CHROME_STORE_URL } from '@/lib/site';
 
-/** Compact Chrome + Firefox pair for the site header (matched height, label style, width). */
+/** Compact header actions: Get started (signed out) + Get extension. */
 export function HeaderInstallButtons() {
+  const { data: session, isPending } = authClient.useSession();
+  const signedIn = Boolean(session?.user);
+
   return (
-    <div
-      className="hidden items-center rounded-full border border-syntax-border bg-syntax-card/40 p-0.5 sm:flex"
-      role="group"
-      aria-label="Install extension"
-    >
+    <div className="hidden items-center gap-2 sm:flex">
+      {isPending || signedIn ? null : (
+        <a
+          className="btn-brand inline-flex h-9 items-center rounded-full px-4 text-sm"
+          href="/pricing"
+        >
+          Get started
+        </a>
+      )}
       <a
-        className={`${STORE_BTN} btn-primary shadow-none`}
+        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-white/15 px-3.5 text-sm font-medium text-syntax-text transition hover:border-white/30 hover:bg-white/5"
         href={CHROME_STORE_URL}
         rel="noopener noreferrer"
         target="_blank"
       >
-        Chrome
-      </a>
-      <a
-        className={`${STORE_BTN} btn-secondary border-0 bg-transparent hover:bg-syntax-hover`}
-        href={FIREFOX_ADDON_URL}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        Firefox
+        <Image
+          alt=""
+          aria-hidden
+          className="h-4 w-4 object-contain"
+          height={16}
+          src={BROWSER_ICON_CHROME}
+          width={16}
+        />
+        Get extension
       </a>
     </div>
   );

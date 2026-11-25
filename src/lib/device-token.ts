@@ -1,7 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { and, eq, gt } from 'drizzle-orm';
 import { db } from './db';
-import { asPlan, type Plan } from './plan';
+import { planForAccount, type Plan } from './plan';
 import { deviceToken, user } from './schema';
 
 const TOKEN_TTL_MS = 1000 * 60 * 60 * 24 * 365;
@@ -56,6 +56,6 @@ export async function resolveDeviceToken(token: string): Promise<{
     id: row.id,
     email: row.email,
     name: row.name,
-    plan: asPlan(row.plan),
+    plan: planForAccount(row.email, row.plan),
   };
 }

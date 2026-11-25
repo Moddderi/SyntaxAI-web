@@ -5,9 +5,9 @@ Marketing site and account/billing API for the SyntaxAI Chrome extension.
 ## Pages
 
 - `/` — Landing
-- `/pricing` — Free vs Pro (Polar checkout)
+- `/pricing` — Free vs Pro (Creem checkout)
 - `/auth/signin` — Google or GitHub sign-in
-- `/account` — Plan and Polar customer portal
+- `/account` — Plan and Creem customer portal
 - `/privacy` — Privacy policy
 - `/terms` — Terms of service
 
@@ -27,13 +27,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Accounts and Polar
+## Accounts and Creem
 
 1. **Neon** — create a project, copy `DATABASE_URL`, run `npm run db:push`.
 2. **Better Auth** — `openssl rand -base64 32` → `BETTER_AUTH_SECRET`. Set `BETTER_AUTH_URL` to the public site URL.
 3. **Google Cloud** — OAuth client type Web. Origins: `http://localhost:3000` and `https://syntaxai.app`. Redirects: `{origin}/api/auth/callback/google`.
 4. **GitHub** — OAuth App. Homepage `https://syntaxai.app`. Callback: `{origin}/api/auth/callback/github`. Set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` (button hidden until client id is set).
-5. **Polar** — create a recurring Pro product at `$3.49/mo`. Copy product id + organization access token. Webhook URL: `https://syntaxai.app/api/auth/polar/webhooks` (subscribe to subscription events). Use `POLAR_SERVER=sandbox` with sandbox credentials while testing.
+5. **Creem** — create a recurring Pro product at `$3.49/mo`. Copy product id + API key. Webhook URL: `https://syntaxai.app/api/auth/creem/webhook`. Use `CREEM_TEST_MODE=true` with test-mode credentials while testing.
 
 ## Deploy (Vercel)
 
@@ -87,7 +87,7 @@ Update every provider to use `https://syntaxai.app` (keep `http://localhost:3000
   Redirect URI: `https://syntaxai.app/api/auth/callback/google`
 - **GitHub** — Homepage: `https://syntaxai.app`  
   Callback: `https://syntaxai.app/api/auth/callback/github`
-- **Polar** — Webhook: `https://syntaxai.app/api/auth/polar/webhooks`
+- **Creem** — Webhook: `https://syntaxai.app/api/auth/creem/webhook`
 
 ### 5. Smoke test
 
@@ -118,7 +118,7 @@ Vercel Hobby counts every Function + CDN hit. The extension’s sync/AI traffic 
 NEXT_PUBLIC_SITE_URL=https://syntaxai.app
 BETTER_AUTH_URL=https://syntaxai.app
 NEXT_PUBLIC_API_URL=https://api.syntaxai.app
-NEXT_PUBLIC_BILLING_ENABLED=false
+NEXT_PUBLIC_BILLING_ENABLED=true
 ```
 
 Do **not** set `RAILWAY_API_ORIGIN` on Railway (only on Vercel). Do **not** set `PORT` manually.
@@ -243,7 +243,7 @@ Note shape (client-generated UUID `id`):
 
 ### Beta billing
 
-Set `NEXT_PUBLIC_BILLING_ENABLED=false` (default in `.env.example`). When false, `/api/v1/session` returns `billing.enabled: false` and no limits — extension should not block features. Enable Polar env + flag when FOP/checkout is ready.
+`/api/v1/session` always returns `billing.enabled: false` and `limits: null` so the extension never gates or shows payment. Set `NEXT_PUBLIC_BILLING_ENABLED=true` on the website to show Free/Pro and Creem checkout.
 
 Apply migrations on Neon: `0000`, `0001` (referrals, device tokens), `0002_notes.sql` (or `npm run db:push`).
 

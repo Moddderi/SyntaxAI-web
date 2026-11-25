@@ -7,6 +7,7 @@ import { AuthNav } from './auth/AuthNav';
 import { Logo } from './Logo';
 import { BrowserInstallButtons } from './BrowserInstallButtons';
 import { HeaderInstallButtons } from './HeaderInstallButtons';
+import { authClient } from '@/lib/auth-client';
 import { isBillingEnabled } from '@/lib/site';
 
 const NAV_LINKS = [
@@ -19,6 +20,8 @@ const NAV_LINKS = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = authClient.useSession();
+  const signedIn = Boolean(session?.user);
 
   /** "Home" must always land at the very top (and drop any #hash), even when already on `/`. */
   const goTop = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -117,6 +120,15 @@ export function SiteHeader() {
               </Link>
             ))}
             <AuthNav compact />
+            {signedIn ? null : (
+              <Link
+                className="btn-brand inline-flex h-11 items-center justify-center rounded-full text-sm"
+                href="/pricing"
+                onClick={() => setOpen(false)}
+              >
+                Get started
+              </Link>
+            )}
             <BrowserInstallButtons className="pt-2" layout="stack" />
           </div>
         </nav>

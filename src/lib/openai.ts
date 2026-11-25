@@ -55,6 +55,7 @@ export async function createJsonChatCompletion(
       response_format: { type: 'json_object' },
       messages,
       temperature,
+      max_tokens: 4096,
     }),
   });
 

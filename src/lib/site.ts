@@ -25,7 +25,10 @@ export const BOOK_CALL_URL =
   process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
   'https://calendly.com/kiricenkooleg123/30min';
 
-export const HERO_VIDEO_URL = process.env.NEXT_PUBLIC_HERO_VIDEO_URL;
+export const HERO_VIDEO_URL =
+  process.env.NEXT_PUBLIC_HERO_VIDEO_URL || '/hero.mp4';
+
+export const YOUTUBE_PROMO_URL = 'https://youtu.be/ii2cRXL7Cxg';
 
 export const SUPPORT_EMAIL = 'hello@syntaxai.app';
 
@@ -40,15 +43,16 @@ export const SOCIAL_LINKS = {
 export const PRO_PRICE = '$3.49';
 
 /**
- * Paid plans / checkout UI. Keep false during open beta (FOP + Polar not live).
+ * Paid plans / checkout UI on the website. The extension session stays ungated
+ * regardless of this flag (TabAI model: pay on the site, not in the store listing).
  * Must be NEXT_PUBLIC so client components (UpgradeButton, nav) stay in sync.
  */
 export const isBillingEnabled = process.env.NEXT_PUBLIC_BILLING_ENABLED === 'true';
 
 export const FREE_LIMITS = {
-  notes: 30,
-  contextSaves: 10,
-  photoReads: 10,
+  notes: 15,
+  contextSaves: 5,
+  photoReads: 3,
 } as const;
 
 export const HOW_IT_WORKS = [

@@ -70,9 +70,9 @@ export default function TermsPage() {
 
         <Section title="Subscriptions">
           <p>
-            Paid plans are not yet charged during the beta. When they launch, Pro will be
-            billed monthly through Polar.sh, our merchant of record. You may cancel at any
-            time through the Polar customer portal, and refunds follow Polar policy.
+            Pro is billed monthly through Creem, our merchant of record. New Pro
+            subscriptions include a 7-day trial. You may cancel at any time through the
+            Creem customer portal, and refunds follow Creem policy.
           </p>
         </Section>
 

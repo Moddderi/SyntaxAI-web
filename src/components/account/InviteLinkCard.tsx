@@ -15,48 +15,26 @@ export function InviteLinkCard({ link }: { link: string }) {
     }
   }
 
-  async function share() {
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({
-          title: 'SyntaxAI',
-          text: 'Capture code from any tab into a smart library.',
-          url: link,
-        });
-        return;
-      } catch (error) {
-        if (error instanceof Error && error.name === 'AbortError') {
-          return;
-        }
-      }
-    }
-    await copy();
-  }
-
   return (
-    <div className="invite-link-card rounded-2xl border border-white/12 bg-syntax-bg p-5">
-      <p className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-syntax-muted">
-        Your invite link
-      </p>
-      <p className="mt-3 break-all font-mono text-xs leading-relaxed text-syntax-text md:text-sm">
-        {link}
-      </p>
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <button
-          className="btn-copy-link inline-flex h-11 items-center justify-center gap-2 rounded-full font-mono text-[10px] font-bold uppercase tracking-[0.1em]"
-          onClick={copy}
-          type="button"
-        >
-          {copied ? 'Copied' : 'Copy link'}
-        </button>
-        <button
-          className="btn-secondary inline-flex h-11 items-center justify-center rounded-full border-white/20 font-mono text-[10px] font-bold uppercase tracking-[0.1em]"
-          onClick={share}
-          type="button"
-        >
-          Share
-        </button>
-      </div>
-    </div>
+    <button
+      className="btn-brand inline-flex h-12 w-full items-center justify-center gap-2 rounded-full text-sm"
+      onClick={copy}
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        viewBox="0 0 24 24"
+      >
+        <path d="M10 13a5 5 0 0 0 7.07 0l1.41-1.41a5 5 0 0 0-7.07-7.07L10 5.93" />
+        <path d="M14 11a5 5 0 0 0-7.07 0L5.52 12.4a5 5 0 0 0 7.07 7.07L14 18.07" />
+      </svg>
+      {copied ? 'Link copied' : 'Create link'}
+    </button>
   );
 }
