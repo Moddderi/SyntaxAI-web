@@ -5,7 +5,7 @@ import { SUPPORT_EMAIL } from '@/lib/site';
 export const metadata = buildPageMetadata({
   title: 'Terms of Service',
   description:
-    'SyntaxAI terms of service for the open beta — accounts, your notes, AI processing, and acceptable use.',
+    'SyntaxAI terms of service — accounts, your notes, subscriptions, AI processing, and acceptable use.',
   path: '/terms',
 });
 
@@ -33,11 +33,11 @@ export default function TermsPage() {
       <p className="mt-6 text-syntax-muted">Last updated: November 2026</p>
 
       <div className="mt-12 space-y-10 text-syntax-muted">
-        <Section title="Early access">
+        <Section title="The service">
           <p>
-            SyntaxAI is in open beta. Features, limits, pricing and availability may change,
-            and the service is provided &quot;as is&quot; without warranty. By using the
-            extension or website you agree to these terms and to our Privacy Policy.
+            SyntaxAI is an AI developer notebook for Chrome and Firefox. The service is
+            provided &quot;as is&quot; without warranty. By using the extension or website you
+            agree to these terms and to our Privacy Policy.
           </p>
         </Section>
 

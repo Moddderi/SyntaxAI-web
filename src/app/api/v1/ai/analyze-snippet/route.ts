@@ -5,6 +5,7 @@ import {
   extensionOptions,
 } from '@/lib/extension-api';
 import { buildSnippetAnalyzerSystemPrompt } from '@/lib/ai-prompts';
+import { openFreeAiQuota } from '@/lib/free-quota';
 import { AI_RATE_LIMITS, enforceRateLimit } from '@/lib/rate-limit';
 import { analyzeSnippetRequestSchema, rawSnippetResultSchema } from '@/lib/ai-types';
 import {
@@ -69,6 +70,11 @@ export async function POST(request: NextRequest) {
   }
 
   const { locale, promptOrCode, imagesBase64 } = parsed.data;
+  const hasImages = Boolean(imagesBase64 && imagesBase64.length > 0);
+  const quota = await openFreeAiQuota(user, hasImages ? 'photos' : 'notes');
+  if (!quota.ok) {
+    return quota.response;
+  }
 
   try {
     const content = await createJsonChatCompletion([
@@ -80,16 +86,19 @@ export async function POST(request: NextRequest) {
     try {
       json = JSON.parse(content) as unknown;
     } catch {
+      await quota.refund();
       return extensionJson({ error: 'AI returned invalid JSON.' }, 502);
     }
 
     const result = rawSnippetResultSchema.safeParse(json);
     if (!result.success) {
+      await quota.refund();
       return extensionJson({ error: 'AI JSON does not match the expected schema.' }, 502);
     }
 
     return extensionJson({ result: result.data });
   } catch (error) {
+    await quota.refund();
     if (error instanceof OpenAiProxyError) {
       return extensionJson({ error: error.message }, error.status);
     }

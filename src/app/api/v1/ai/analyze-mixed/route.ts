@@ -14,6 +14,7 @@ import {
   rawMixedResultSchema,
   type AnalyzeMixedRequest,
 } from '@/lib/ai-types';
+import { openFreeAiQuota } from '@/lib/free-quota';
 import { createJsonChatCompletion, OpenAiProxyError } from '@/lib/openai';
 import { AI_RATE_LIMITS, enforceRateLimit } from '@/lib/rate-limit';
 
@@ -115,6 +116,10 @@ export async function POST(request: NextRequest) {
   }
 
   const { locale, pageContext } = parsed.data;
+  const quota = await openFreeAiQuota(user, 'context');
+  if (!quota.ok) {
+    return quota.response;
+  }
 
   try {
     const content = await createJsonChatCompletion([
@@ -126,16 +131,19 @@ export async function POST(request: NextRequest) {
     try {
       json = JSON.parse(content) as unknown;
     } catch {
+      await quota.refund();
       return extensionJson({ error: 'AI returned invalid JSON.' }, 502);
     }
 
     const raw = rawMixedResultSchema.safeParse(json);
     if (!raw.success) {
+      await quota.refund();
       return extensionJson({ error: 'AI JSON does not match the expected schema.' }, 502);
     }
 
     const result = normalizeMixedRaw(raw.data);
     if (!result) {
+      await quota.refund();
       return extensionJson(
         { error: 'AI could not structure the selection. Edit fields manually and save.' },
         422,
@@ -144,6 +152,7 @@ export async function POST(request: NextRequest) {
 
     return extensionJson({ result });
   } catch (error) {
+    await quota.refund();
     if (error instanceof OpenAiProxyError) {
       return extensionJson({ error: error.message }, error.status);
     }

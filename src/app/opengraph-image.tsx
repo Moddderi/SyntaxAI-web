@@ -151,7 +151,7 @@ export default function OpenGraphImage() {
                   fontWeight: 700,
                 }}
               >
-                Open beta · free
+                Chrome &amp; Firefox
               </div>
               <div
                 style={{

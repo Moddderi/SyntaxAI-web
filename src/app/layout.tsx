@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Work_Sans } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteChrome } from '@/components/SiteChrome';
 import {
@@ -95,6 +96,7 @@ export default function RootLayout({
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />
         <SiteChrome>{children}</SiteChrome>
+        <Analytics />
       </body>
     </html>
   );

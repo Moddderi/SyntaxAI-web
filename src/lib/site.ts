@@ -33,11 +33,9 @@ export const YOUTUBE_PROMO_URL = 'https://youtu.be/ii2cRXL7Cxg';
 export const SUPPORT_EMAIL = 'hello@syntaxai.app';
 
 export const SOCIAL_LINKS = {
-  discord: process.env.NEXT_PUBLIC_SOCIAL_DISCORD_URL ?? '',
-  twitter: process.env.NEXT_PUBLIC_SOCIAL_TWITTER_URL ?? '',
-  linkedin: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL ?? '',
-  instagram: process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM_URL ?? '',
-  tiktok: process.env.NEXT_PUBLIC_SOCIAL_TIKTOK_URL ?? '',
+  twitter: process.env.NEXT_PUBLIC_SOCIAL_TWITTER_URL || 'https://x.com/kiricholeg',
+  linkedin:
+    process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL || 'https://www.linkedin.com/company/145502719',
 } as const;
 
 export const PRO_PRICE = '$3.49';

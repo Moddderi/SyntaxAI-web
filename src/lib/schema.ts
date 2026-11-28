@@ -1,4 +1,4 @@
-import { boolean, index, jsonb, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import { boolean, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 import type { NoteShareSnapshot } from './note-share-types';
 
 export const user = pgTable('user', {
@@ -12,6 +12,13 @@ export const user = pgTable('user', {
   plan: text('plan').notNull().default('free'),
   creemCustomerId: text('creem_customer_id'),
   hadTrial: boolean('had_trial').notNull().default(false),
+  /** UTC day (YYYY-MM-DD) the free AI counters below belong to. */
+  freeNoteDay: text('free_note_day'),
+  freeNoteCount: integer('free_note_count').notNull().default(0),
+  freeContextDay: text('free_context_day'),
+  freeContextCount: integer('free_context_count').notNull().default(0),
+  freePhotoDay: text('free_photo_day'),
+  freePhotoCount: integer('free_photo_count').notNull().default(0),
 });
 
 export const referralMeta = pgTable('referral_meta', {

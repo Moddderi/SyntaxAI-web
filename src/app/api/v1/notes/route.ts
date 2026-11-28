@@ -4,6 +4,12 @@ import {
   extensionJson,
   extensionOptions,
 } from '@/lib/extension-api';
+import {
+  freeQuotaResponse,
+  listActiveNoteContent,
+  partitionSyncByQuota,
+  quotaApplies,
+} from '@/lib/free-quota';
 import { listNotesSince, upsertNotesFromClient } from '@/lib/notes';
 import { noteSyncPushSchema } from '@/lib/note-types';
 import { enforceRateLimit, NOTES_RATE_LIMITS } from '@/lib/rate-limit';
@@ -69,7 +75,22 @@ export async function POST(request: NextRequest) {
     return extensionJson({ error: 'Invalid payload', details: parsed.error.flatten() }, 400);
   }
 
-  const result = await upsertNotesFromClient(user.id, parsed.data.notes);
+  let notesToWrite = parsed.data.notes;
+  if (quotaApplies(user.plan)) {
+    const existing = await listActiveNoteContent(user.id);
+    const quota = partitionSyncByQuota(existing, parsed.data.notes);
+    if (quota.limitId) {
+      if (quota.allowed.length > 0) {
+        await upsertNotesFromClient(user.id, quota.allowed);
+      }
+      return freeQuotaResponse(quota.limitId, {
+        appliedIds: quota.allowed.map((item) => item.id),
+      });
+    }
+    notesToWrite = quota.allowed;
+  }
+
+  const result = await upsertNotesFromClient(user.id, notesToWrite);
 
   return extensionJson({
     ok: true,

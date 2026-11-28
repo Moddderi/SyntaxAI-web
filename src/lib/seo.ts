@@ -14,7 +14,7 @@ export const SITE_NAME = 'SyntaxAI';
 export const SEO_TITLE = 'SyntaxAI — AI developer notebook for Chrome & Firefox';
 
 export const SEO_DESCRIPTION =
-  'Capture code, docs, and screenshots from any tab. SyntaxAI titles, tags, and stacks them into a searchable library. Open beta — free for Chrome and Firefox.';
+  'Capture code, docs, and screenshots from any tab. SyntaxAI titles, tags, and stacks them into a searchable library. Free to start, Pro at $3.49/mo — Chrome and Firefox.';
 
 /** Static 1200×630 card Discord/Slack/iMessage can fetch without hitting the dynamic OG route. */
 export const OG_IMAGE = {
